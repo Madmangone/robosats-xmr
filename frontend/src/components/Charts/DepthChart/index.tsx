@@ -87,7 +87,7 @@ const DepthChart: React.FC<DepthChartProps> = ({
           const currencyAmount = (currencyPrice * originalAmount) / originalPrice;
 
           order.base_price = currencyPrice;
-          order.satoshis_now = (100000000 * currencyAmount) / currencyPrice;
+          order.piconeros_now = (100000000 * currencyAmount) / currencyPrice;
         }
         return order;
       });
@@ -190,7 +190,7 @@ const DepthChart: React.FC<DepthChartProps> = ({
     orders.forEach((order) => {
       const lastSumOrders = sumOrders;
 
-      sumOrders += (order.satoshis_now ?? 0) / 100000000;
+      sumOrders += (order.piconeros_now ?? 0) / 100000000;
       const datum: Datum[] = [
         {
           // Vertical Line
@@ -408,7 +408,7 @@ const DepthChart: React.FC<DepthChartProps> = ({
                 axisLeft={{
                   tickSize: 5,
                   format: formatAxisY,
-                  legend: 'BTC',
+                  legend: 'XMR',
                   legendOffset: -42,
                   legendPosition: 'middle',
                 }}

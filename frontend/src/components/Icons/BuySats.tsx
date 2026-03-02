@@ -1,7 +1,7 @@
 import React from 'react';
 import { SvgIcon, type SvgIconProps } from '@mui/material';
 
-const BuySats: React.FC<SvgIconProps> = (props) => {
+const BuyXMR: React.FC<SvgIconProps> = (props) => {
   return (
     <SvgIcon sx={props.sx} color={props.color} x='0px' y='0px' viewBox='0 0 300 300'>
       <g>
@@ -136,4 +136,4 @@ const BuySats: React.FC<SvgIconProps> = (props) => {
   );
 };
 
-export default BuySats;
+export default BuyXMR;

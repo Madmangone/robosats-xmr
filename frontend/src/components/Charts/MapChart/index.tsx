@@ -61,7 +61,7 @@ const MapChart: React.FC<MapChartProps> = ({
         <DialogTitle>{t('Download high resolution map?')}</DialogTitle>
         <DialogContent>
           {t(
-            'By doing so, you will be fetching map tiles from a third-party provider. Depending on your setup, private information might be leaked to servers outside the RoboSats federation.',
+            'By doing so, you will be fetching map tiles from a third-party provider. Depending on your setup, private information might be leaked to servers outside the RoboXMR federation.',
           )}
         </DialogContent>
         <DialogActions>

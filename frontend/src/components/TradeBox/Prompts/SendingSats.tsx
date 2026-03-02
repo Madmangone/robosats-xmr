@@ -2,7 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Grid, Typography, CircularProgress } from '@mui/material';
 
-export const SendingSatsPrompt = (): React.JSX.Element => {
+export const SendingXMRPrompt = (): React.JSX.Element => {
   const { t } = useTranslation();
 
   return (
@@ -17,7 +17,7 @@ export const SendingSatsPrompt = (): React.JSX.Element => {
       <Grid item>
         <Typography variant='body2'>
           {t(
-            'RoboSats is trying to pay your lightning invoice. Remember that lightning nodes must be online in order to receive payments.',
+            'RoboXMR is trying to pay your monero invoice. Remember that monero nodes must be online in order to receive payments.',
           )}
         </Typography>
       </Grid>
@@ -25,7 +25,7 @@ export const SendingSatsPrompt = (): React.JSX.Element => {
         <Typography variant='body2'>
           <b>{t('Taking too long?')}</b>{' '}
           {t(
-            'Lightning payments are usually instantaneous, but sometimes a node in the route may be down, which can cause your payout to take up to 24 hours to arrive in your wallet.',
+            'Monero payments are usually instantaneous, but sometimes a node in the route may be down, which can cause your payout to take up to 24 hours to arrive in your wallet.',
           )}
         </Typography>
       </Grid>
@@ -36,4 +36,4 @@ export const SendingSatsPrompt = (): React.JSX.Element => {
   );
 };
 
-export default SendingSatsPrompt;
+export default SendingXMRPrompt;

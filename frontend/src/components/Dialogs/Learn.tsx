@@ -20,12 +20,12 @@ const LearnDialog = ({ open, onClose }: Props): React.JSX.Element => {
 
   return (
     <Dialog open={open} onClose={onClose}>
-      <DialogTitle>{t('Learn RoboSats')}</DialogTitle>
+      <DialogTitle>{t('Learn RoboXMR')}</DialogTitle>
 
       <DialogContent>
         <DialogContentText>
           {t(
-            'You are about to visit Learn RoboSats. It hosts tutorials and documentation to help you learn how to use RoboSats and understand how it works.',
+            'You are about to visit Learn RoboXMR. It hosts tutorials and documentation to help you learn how to use RoboXMR and understand how it works.',
           )}
         </DialogContentText>
       </DialogContent>

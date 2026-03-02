@@ -33,18 +33,18 @@ const AboutDialog = ({ open, onClose }: Props): React.JSX.Element => {
     >
       <DialogContent>
         <Typography component='h4' variant='h4'>
-          {t('What is RoboSats?')}
+          {t('What is RoboXMR?')}
         </Typography>
         <Typography component='div' variant='body2'>
           <p>
-            {t('It is a BTC/FIAT peer-to-peer exchange over lightning.') + ' '}{' '}
+            {t('It is a XMR/FIAT peer-to-peer exchange over monero.') + ' '}{' '}
             {t(
-              'It simplifies matchmaking and minimizes the need of trust. RoboSats focuses in privacy and speed.',
+              'It simplifies matchmaking and minimizes the need of trust. RoboXMR focuses in privacy and speed.',
             )}
           </p>
           <p>
-            {t('RoboSats is an open source project ')}{' '}
-            <Link href='https://github.com/RoboSats/robosats'>{t('(GitHub).')}</Link>
+            {t('RoboXMR is an open source project ')}{' '}
+            <Link href='https://github.com/RoboXMR/robosats'>{t('(GitHub).')}</Link>
           </p>
         </Typography>
 
@@ -57,12 +57,12 @@ const AboutDialog = ({ open, onClose }: Props): React.JSX.Element => {
               <p>
                 {' '}
                 {t(
-                  "AnonymousAlice01 wants to sell bitcoin. She posts a sell order. BafflingBob02 wants to buy bitcoin and he takes Alice's order. Both have to post a small bond using lightning to prove they are real robots. Then, Alice posts the trade collateral also using a lightning hold invoice. RoboSats locks the invoice until Alice confirms she received the fiat, then the satoshis are released to Bob. Enjoy your satoshis, Bob!",
+                  "AnonymousAlice01 wants to sell monero. She posts a sell order. BafflingBob02 wants to buy monero and he takes Alice's order. Both have to post a small bond using monero to prove they are real robots. Then, Alice posts the trade collateral also using a monero hold invoice. RoboXMR locks the invoice until Alice confirms she received the fiat, then the piconeros are released to Bob. Enjoy your piconeros, Bob!",
                 )}
               </p>
               <p>
                 {t(
-                  'At no point, AnonymousAlice01 and BafflingBob02 have to entrust the bitcoin funds to each other. In case they have a conflict, the RoboSats coordinator will help resolving the dispute.',
+                  'At no point, AnonymousAlice01 and BafflingBob02 have to entrust the monero funds to each other. In case they have a conflict, the RoboXMR coordinator will help resolving the dispute.',
                 )}
                 {t('You can find a step-by-step description of the trade pipeline in ')}
                 <Link target='_blank' href='https://learn.robosats.org/docs/trade-pipeline/'>
@@ -87,7 +87,7 @@ const AboutDialog = ({ open, onClose }: Props): React.JSX.Element => {
               <p>
                 {' '}
                 {t(
-                  'RoboSats is a decentralized exchange with multiple, fully redundant, trade coordinators. The coordinator provides the infrastructure for your trade: mantains the intermediary lightning node, does book keeping, and relays your encrypted chat messages. The coordinator is also the judge in case your order enters a dispute. The coordinator is a trusted role, make sure you trust your coordinator by exploring its profile, webpage, social media and the comments from other users online.',
+                  'RoboXMR is a decentralized exchange with multiple, fully redundant, trade coordinators. The coordinator provides the infrastructure for your trade: mantains the intermediary monero node, does book keeping, and relays your encrypted chat messages. The coordinator is also the judge in case your order enters a dispute. The coordinator is a trusted role, make sure you trust your coordinator by exploring its profile, webpage, social media and the comments from other users online.',
                 )}
               </p>
             </Typography>
@@ -117,7 +117,7 @@ const AboutDialog = ({ open, onClose }: Props): React.JSX.Element => {
             <Typography component='div' variant='body2'>
               <p>
                 {t(
-                  'Each RoboSats coordinator will set a maximum trade size to minimize the hassle of lightning routing failures. There is no limits to the number of trades per day. A robot can only have one order at a time. However, you can use multiple robots simultaneously using the Robot garage. Remember to back up your robot tokens!',
+                  'Each RoboXMR coordinator will set a maximum trade size to minimize the hassle of monero routing failures. There is no limits to the number of trades per day. A robot can only have one order at a time. However, you can use multiple robots simultaneously using the Robot garage. Remember to back up your robot tokens!',
                 )}{' '}
               </p>
             </Typography>
@@ -132,7 +132,7 @@ const AboutDialog = ({ open, onClose }: Props): React.JSX.Element => {
             <Typography component='div' variant='body2'>
               <p>
                 {t(
-                  'The trade fee is collected by the robosats coordinator as a compensation for their service. You can see the fees of each coordinator by checking out their profile. The trade fee is split to be covered by both: the order maker and the order taker. Typically, the maker fee will be significantly smaller than the taker fee. In case an onchain address is used to received the Sats a variable swap fee applies. The onchain payout fee can also be seen in the profile of the coordinator.',
+                  'The trade fee is collected by the robosats coordinator as a compensation for their service. You can see the fees of each coordinator by checking out their profile. The trade fee is split to be covered by both: the order maker and the order taker. Typically, the maker fee will be significantly smaller than the taker fee. In case an onchain address is used to received the XMR a variable swap fee applies. The onchain payout fee can also be seen in the profile of the coordinator.',
                 )}{' '}
               </p>
               <p>
@@ -146,14 +146,14 @@ const AboutDialog = ({ open, onClose }: Props): React.JSX.Element => {
 
         <Accordion disableGutters={true}>
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-            <Typography>{t('Is RoboSats private?')}</Typography>
+            <Typography>{t('Is RoboXMR private?')}</Typography>
           </AccordionSummary>
           <AccordionDetails>
             <Typography component='div' variant='body2'>
               <p>
                 {' '}
                 {t(
-                  'The RoboSats client, which you run on your local machine or browser, does not collect or share your IP address, location, name, or personal data. The client encrypts your private messages, which can only be decrypted by your trade partner.',
+                  'The RoboXMR client, which you run on your local machine or browser, does not collect or share your IP address, location, name, or personal data. The client encrypts your private messages, which can only be decrypted by your trade partner.',
                 )}{' '}
               </p>
               <p>
@@ -165,7 +165,7 @@ const AboutDialog = ({ open, onClose }: Props): React.JSX.Element => {
               <p>
                 {' '}
                 {t(
-                  'Your trade partner will not know the destination of the Lightning payment. The permanence of the data collected by the coordinators depend on their privacy and data policies. If a dispute arises, a coordinator may request additional information. The specifics of this process can vary from coordinator to coordinator.',
+                  'Your trade partner will not know the destination of the Monero payment. The permanence of the data collected by the coordinators depend on their privacy and data policies. If a dispute arises, a coordinator may request additional information. The specifics of this process can vary from coordinator to coordinator.',
                 )}{' '}
               </p>
               <p>
@@ -214,15 +214,15 @@ const AboutDialog = ({ open, onClose }: Props): React.JSX.Element => {
               <p>
                 {' '}
                 {t(
-                  "While trust requirements are minimized, there are ways for the coordinator to run away with your satoshis: for example, by not releasing the satoshis to the buyer. It could be argued that such move is not in the coordinator's interest as it would damage the reputation for a small payout. However, you should hesitate and only trade small quantities at a time. For large amounts you can use a high reputation DAO based escrow service such as Bisq",
+                  "While trust requirements are minimized, there are ways for the coordinator to run away with your piconeros: for example, by not releasing the piconeros to the buyer. It could be argued that such move is not in the coordinator's interest as it would damage the reputation for a small payout. However, you should hesitate and only trade small quantities at a time. For large amounts you can use a high reputation DAO based escrow service such as Bisq",
                 )}
               </p>
               <p>
                 {' '}
                 {t(
-                  'You can build more trust on the RoboSats and coordinator infrastructure by inspecting the source code.',
+                  'You can build more trust on the RoboXMR and coordinator infrastructure by inspecting the source code.',
                 )}{' '}
-                <Link href='https://github.com/RoboSats/robosats'> {t('Project source code')}</Link>
+                <Link href='https://github.com/RoboXMR/robosats'> {t('Project source code')}</Link>
                 .{' '}
               </p>
             </Typography>
@@ -238,7 +238,7 @@ const AboutDialog = ({ open, onClose }: Props): React.JSX.Element => {
               <p>
                 {' '}
                 {t(
-                  'Your sats will return to you. Any hold invoice that is not settled would be automatically returned even if the coordinator goes down forever. This is true for both, locked bonds and trading escrows. However, there is a small window between the seller confirms FIAT RECEIVED and the moment the buyer receives the satoshis when the funds could be permanently lost if the coordinator disappears. This window is usually about 1 second long. Make sure to have enough inbound liquidity to avoid routing failures. If you have any problem, reach out trough the RoboSats public channels or directly to your trade coordinator using one of the contact methods listed on their profile.',
+                  'Your XMR will return to you. Any hold invoice that is not settled would be automatically returned even if the coordinator goes down forever. This is true for both, locked bonds and trading escrows. However, there is a small window between the seller confirms FIAT RECEIVED and the moment the buyer receives the piconeros when the funds could be permanently lost if the coordinator disappears. This window is usually about 1 second long. Make sure to have enough inbound liquidity to avoid routing failures. If you have any problem, reach out trough the RoboXMR public channels or directly to your trade coordinator using one of the contact methods listed on their profile.',
                 )}
               </p>
             </Typography>
@@ -247,14 +247,14 @@ const AboutDialog = ({ open, onClose }: Props): React.JSX.Element => {
 
         <Accordion disableGutters={true}>
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-            <Typography>{t('Is RoboSats legal in my country?')}</Typography>
+            <Typography>{t('Is RoboXMR legal in my country?')}</Typography>
           </AccordionSummary>
           <AccordionDetails>
             <Typography component='div' variant='body2'>
               <p>
                 {' '}
                 {t(
-                  'In many countries using RoboSats is no different than using Ebay or Craiglist. Your regulation may vary. It is your responsibility to comply.',
+                  'In many countries using RoboXMR is no different than using Ebay or Craiglist. Your regulation may vary. It is your responsibility to comply.',
                 )}
               </p>
             </Typography>
@@ -270,13 +270,13 @@ const AboutDialog = ({ open, onClose }: Props): React.JSX.Element => {
               <p>
                 {' '}
                 {t(
-                  'This lightning application is provided as is. It is in active development: trade with the utmost caution. There is no private support. Support is only offered via public channels ',
+                  'This monero application is provided as is. It is in active development: trade with the utmost caution. There is no private support. Support is only offered via public channels ',
                 )}
                 <Link href='https://simplex.chat/contact/#/?v=1-2&smp=smp%3A%2F%2F0YuTwO05YJWS8rkjn9eLJDjQhFKvIYd8d4xG8X1blIU%3D%40smp8.simplex.im%2FyEX_vdhWew_FkovCQC3mRYRWZB1j_cBq%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAnrf9Jw3Ajdp4EQw71kqA64VgsIIzw8YNn68WjF09jFY%253D%26srv%3Dbeccx4yfxxbvyhqypaavemqurytl6hozr47wfc7uuecacjqdvwpw2xid.onion&data=%7B%22type%22%3A%22group%22%2C%22groupLinkId%22%3A%22hWnMVPnJl-KT3-virDk0JA%3D%3D%22%7D'>
                   {t('(SimpleX)')}
                 </Link>
                 {t(
-                  '. RoboSats developers will never contact you. The developers or the coordinators will definitely never ask for your robot token.',
+                  '. RoboXMR developers will never contact you. The developers or the coordinators will definitely never ask for your robot token.',
                 )}
               </p>
             </Typography>

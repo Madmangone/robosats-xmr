@@ -39,7 +39,7 @@ const MoreTooltip = ({ children }: MoreTooltipProps): React.JSX.Element => {
           justifyContent='center'
         >
           <Grid item sx={{ position: 'relative', right: '0.4em' }}>
-            <Tooltip enterTouchDelay={250} placement='left' title={t('RoboSats information')}>
+            <Tooltip enterTouchDelay={250} placement='left' title={t('RoboXMR information')}>
               <IconButton
                 sx={{
                   color: open.info ? theme.palette.primary.main : theme.palette.text.secondary,
@@ -54,7 +54,7 @@ const MoreTooltip = ({ children }: MoreTooltipProps): React.JSX.Element => {
           </Grid>
 
           <Grid item sx={{ position: 'relative', right: '0.4em' }}>
-            <Tooltip enterTouchDelay={250} placement='left' title={t('Learn RoboSats')}>
+            <Tooltip enterTouchDelay={250} placement='left' title={t('Learn RoboXMR')}>
               <IconButton
                 sx={{
                   color: open.learn ? theme.palette.primary.main : theme.palette.text.secondary,

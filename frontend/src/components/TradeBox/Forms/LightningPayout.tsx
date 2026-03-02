@@ -37,63 +37,63 @@ import { type UseAppStoreType, AppContext } from '../../../contexts/AppContext';
 
 let filteredProxies: Array<Record<string, object>> = [];
 
-const lightningPrefix: string = 'lightning:';
+const moneroPrefix: string = 'monero:';
 
-export interface LightningForm {
+export interface MoneroForm {
   invoice: string;
   amount: number;
   advancedOptions: boolean;
   useCustomBudget: boolean;
-  routingBudgetUnit: 'PPM' | 'Sats';
+  routingBudgetUnit: 'PPM' | 'XMR';
   routingBudgetPPM: number;
-  routingBudgetSats: number | undefined;
+  routingBudgetXMR: number | undefined;
   badInvoice: string;
   useLnproxy: boolean;
   lnproxyInvoice: string;
   lnproxyAmount: number;
   lnproxyServer: number;
-  lnproxyBudgetUnit: 'PPM' | 'Sats';
+  lnproxyBudgetUnit: 'PPM' | 'XMR';
   lnproxyBudgetPPM: number;
-  lnproxyBudgetSats: number;
+  lnproxyBudgetXMR: number;
   badLnproxy: string;
 }
 
-export const defaultLightning: LightningForm = {
+export const defaultMonero: MoneroForm = {
   invoice: '',
   amount: 0,
   advancedOptions: false,
   useCustomBudget: false,
   routingBudgetUnit: 'PPM',
   routingBudgetPPM: 1000,
-  routingBudgetSats: undefined,
+  routingBudgetXMR: undefined,
   badInvoice: '',
   useLnproxy: false,
   lnproxyInvoice: '',
   lnproxyAmount: 0,
   lnproxyServer: 0,
-  lnproxyBudgetUnit: 'Sats',
+  lnproxyBudgetUnit: 'XMR',
   lnproxyBudgetPPM: 0,
-  lnproxyBudgetSats: 0,
+  lnproxyBudgetXMR: 0,
   badLnproxy: '',
 };
 
-interface LightningPayoutFormProps {
+interface MoneroPayoutFormProps {
   order: Order;
   loading: boolean;
-  lightning: LightningForm;
-  setLightning: (state: LightningForm) => void;
+  monero: MoneroForm;
+  setMonero: (state: MoneroForm) => void;
   onClickSubmit: (invoice: string) => void;
   settings: Settings;
 }
 
-export const LightningPayoutForm = ({
+export const MoneroPayoutForm = ({
   order,
   loading,
   onClickSubmit,
-  lightning,
-  setLightning,
+  monero,
+  setMonero,
   settings,
-}: LightningPayoutFormProps): React.JSX.Element => {
+}: MoneroPayoutFormProps): React.JSX.Element => {
   const { client } = useContext<UseAppStoreType>(AppContext);
   const { t } = useTranslation();
   const theme = useTheme();
@@ -102,8 +102,8 @@ export const LightningPayoutForm = ({
   const [noMatchingLnProxies, setNoMatchingLnProxies] = useState<string>('');
 
   const computeInvoiceAmount = (): number => {
-    const tradeAmount = order.trade_satoshis;
-    return Math.floor(tradeAmount - tradeAmount * (lightning.routingBudgetPPM / 1000000));
+    const tradeAmount = order.trade_piconeros;
+    return Math.floor(tradeAmount - tradeAmount * (monero.routingBudgetPPM / 1000000));
   };
 
   const validateInvoice = (invoice: string, targetAmount: number): string => {
@@ -123,51 +123,51 @@ export const LightningPayoutForm = ({
 
   useEffect(() => {
     const amount = computeInvoiceAmount();
-    setLightning({
-      ...lightning,
+    setMonero({
+      ...monero,
       amount,
-      lnproxyAmount: amount - lightning.lnproxyBudgetSats,
-      routingBudgetSats:
-        lightning.routingBudgetSats === undefined
-          ? Math.ceil((amount / 1000000) * lightning.routingBudgetPPM)
-          : lightning.routingBudgetSats,
+      lnproxyAmount: amount - monero.lnproxyBudgetXMR,
+      routingBudgetXMR:
+        monero.routingBudgetXMR === undefined
+          ? Math.ceil((amount / 1000000) * monero.routingBudgetPPM)
+          : monero.routingBudgetXMR,
     });
-  }, [lightning.routingBudgetPPM]);
+  }, [monero.routingBudgetPPM]);
 
   useEffect(() => {
-    if (lightning.invoice !== '') {
-      const invoice = lightning.invoice.startsWith(lightningPrefix)
-        ? lightning.invoice.slice(lightningPrefix.length)
-        : lightning.invoice;
+    if (monero.invoice !== '') {
+      const invoice = monero.invoice.startsWith(moneroPrefix)
+        ? monero.invoice.slice(moneroPrefix.length)
+        : monero.invoice;
 
-      setLightning({
-        ...lightning,
+      setMonero({
+        ...monero,
         invoice: invoice,
-        badInvoice: validateInvoice(invoice, lightning.amount),
+        badInvoice: validateInvoice(invoice, monero.amount),
       });
     }
-  }, [lightning.invoice, lightning.amount]);
+  }, [monero.invoice, monero.amount]);
 
   useEffect(() => {
-    if (lightning.lnproxyInvoice !== '') {
-      const invoice = lightning.lnproxyInvoice.startsWith(lightningPrefix)
-        ? lightning.lnproxyInvoice.slice(lightningPrefix.length)
-        : lightning.lnproxyInvoice;
+    if (monero.lnproxyInvoice !== '') {
+      const invoice = monero.lnproxyInvoice.startsWith(moneroPrefix)
+        ? monero.lnproxyInvoice.slice(moneroPrefix.length)
+        : monero.lnproxyInvoice;
 
-      setLightning({
-        ...lightning,
+      setMonero({
+        ...monero,
         lnproxyInvoice: invoice,
-        badLnproxy: validateInvoice(invoice, lightning.lnproxyAmount),
+        badLnproxy: validateInvoice(invoice, monero.lnproxyAmount),
       });
     }
-  }, [lightning.lnproxyInvoice, lightning.lnproxyAmount]);
+  }, [monero.lnproxyInvoice, monero.lnproxyAmount]);
 
   // filter lnproxies when the network settings are updated
-  let bitcoinNetwork: string = 'mainnet';
+  let moneroNetwork: string = 'mainnet';
   let internetNetwork: 'Clearnet' | 'I2P' | 'TOR' = 'Clearnet';
 
   useEffect(() => {
-    bitcoinNetwork = settings?.network ?? 'mainnet';
+    moneroNetwork = settings?.network ?? 'mainnet';
     if (settings.host?.includes('.i2p') === true) {
       internetNetwork = 'I2P';
     } else if (settings.host?.includes('.onion') === true || client === 'mobile') {
@@ -176,7 +176,7 @@ export const LightningPayoutForm = ({
 
     filteredProxies = lnproxies
       .filter((node) => node.relayType === internetNetwork)
-      .filter((node) => node.network === bitcoinNetwork);
+      .filter((node) => node.network === moneroNetwork);
   }, [settings]);
 
   // if "use lnproxy" checkbox is enabled, but there are no matching proxies, enter error state
@@ -184,36 +184,36 @@ export const LightningPayoutForm = ({
     setNoMatchingLnProxies('');
     if (filteredProxies.length === 0) {
       setNoMatchingLnProxies(
-        t(`No proxies available for {{bitcoinNetwork}} bitcoin over {{internetNetwork}}`, {
-          bitcoinNetwork: settings?.network ?? 'mainnet',
+        t(`No proxies available for {{moneroNetwork}} monero over {{internetNetwork}}`, {
+          moneroNetwork: settings?.network ?? 'mainnet',
           internetNetwork: t(internetNetwork),
         }),
       );
     }
-  }, [lightning.useLnproxy]);
+  }, [monero.useLnproxy]);
 
   const fetchLnproxy = function (): void {
     setLoadingLnproxy(true);
     const body: { invoice: string; description: string; routing_msat?: string } = {
-      invoice: lightning.lnproxyInvoice,
+      invoice: monero.lnproxyInvoice,
       description: '',
     };
-    if (lightning.lnproxyBudgetSats > 0) {
-      body.routing_msat = String(lightning.lnproxyBudgetSats * 1000);
+    if (monero.lnproxyBudgetXMR > 0) {
+      body.routing_msat = String(monero.lnproxyBudgetXMR * 1000);
     }
     apiClient
-      .post(filteredProxies[lightning.lnproxyServer].url, '', body)
+      .post(filteredProxies[monero.lnproxyServer].url, '', body)
       .then((data) => {
         if (data.reason !== undefined) {
-          setLightning({ ...lightning, badLnproxy: data.reason });
+          setMonero({ ...monero, badLnproxy: data.reason });
         } else if (data.proxy_invoice !== undefined) {
-          setLightning({ ...lightning, invoice: data.proxy_invoice, badLnproxy: '' });
+          setMonero({ ...monero, invoice: data.proxy_invoice, badLnproxy: '' });
         } else {
-          setLightning({ ...lightning, badLnproxy: 'Unknown lnproxy response' });
+          setMonero({ ...monero, badLnproxy: 'Unknown lnproxy response' });
         }
       })
       .catch(() => {
-        setLightning({ ...lightning, badLnproxy: 'Lnproxy server uncaught error' });
+        setMonero({ ...monero, badLnproxy: 'Lnproxy server uncaught error' });
       })
       .finally(() => {
         setLoadingLnproxy(false);
@@ -222,67 +222,67 @@ export const LightningPayoutForm = ({
 
   const handleAdvancedOptions = function (checked: boolean): void {
     if (checked) {
-      setLightning({
-        ...lightning,
+      setMonero({
+        ...monero,
         advancedOptions: true,
       });
     } else {
-      setLightning({
-        ...defaultLightning,
-        invoice: lightning.invoice,
-        amount: lightning.amount,
+      setMonero({
+        ...defaultMonero,
+        invoice: monero.invoice,
+        amount: monero.amount,
       });
     }
   };
 
   const onProxyBudgetChange = function (e: React.ChangeEventHandler<HTMLInputElement>): void {
     if (isFinite(e.target.value) && e.target.value >= 0) {
-      let lnproxyBudgetSats;
+      let lnproxyBudgetXMR;
       let lnproxyBudgetPPM;
 
-      if (lightning.lnproxyBudgetUnit === 'Sats') {
-        lnproxyBudgetSats = Math.floor(e.target.value);
-        lnproxyBudgetPPM = Math.round((lnproxyBudgetSats * 1000000) / lightning.amount);
+      if (monero.lnproxyBudgetUnit === 'XMR') {
+        lnproxyBudgetXMR = Math.floor(e.target.value);
+        lnproxyBudgetPPM = Math.round((lnproxyBudgetXMR * 1000000) / monero.amount);
       } else {
         lnproxyBudgetPPM = e.target.value;
-        lnproxyBudgetSats = Math.ceil((lightning.amount / 1000000) * lnproxyBudgetPPM);
+        lnproxyBudgetXMR = Math.ceil((monero.amount / 1000000) * lnproxyBudgetPPM);
       }
 
       if (lnproxyBudgetPPM < 99999) {
-        const lnproxyAmount = lightning.amount - lnproxyBudgetSats;
-        setLightning({ ...lightning, lnproxyBudgetSats, lnproxyBudgetPPM, lnproxyAmount });
+        const lnproxyAmount = monero.amount - lnproxyBudgetXMR;
+        setMonero({ ...monero, lnproxyBudgetXMR, lnproxyBudgetPPM, lnproxyAmount });
       }
     }
   };
 
   const onRoutingBudgetChange = function (e: React.ChangeEventHandler<HTMLInputElement>): void {
-    const tradeAmount = order.trade_satoshis;
+    const tradeAmount = order.trade_piconeros;
     if (isFinite(e.target.value) && e.target.value >= 0) {
-      let routingBudgetSats;
+      let routingBudgetXMR;
       let routingBudgetPPM;
 
-      if (lightning.routingBudgetUnit === 'Sats') {
-        routingBudgetSats = Math.floor(e.target.value);
-        routingBudgetPPM = Math.round((routingBudgetSats * 1000000) / tradeAmount);
+      if (monero.routingBudgetUnit === 'XMR') {
+        routingBudgetXMR = Math.floor(e.target.value);
+        routingBudgetPPM = Math.round((routingBudgetXMR * 1000000) / tradeAmount);
       } else {
         routingBudgetPPM = e.target.value;
-        routingBudgetSats = Math.ceil((lightning.amount / 1000000) * routingBudgetPPM);
+        routingBudgetXMR = Math.ceil((monero.amount / 1000000) * routingBudgetPPM);
       }
 
       if (routingBudgetPPM < 99999) {
         const amount = Math.floor(
-          tradeAmount - tradeAmount * (lightning.routingBudgetPPM / 1000000),
+          tradeAmount - tradeAmount * (monero.routingBudgetPPM / 1000000),
         );
-        setLightning({ ...lightning, routingBudgetSats, routingBudgetPPM, amount });
+        setMonero({ ...monero, routingBudgetXMR, routingBudgetPPM, amount });
       }
     }
   };
 
   const lnProxyBudgetHelper = function (): string {
     let text = '';
-    if (lightning.lnproxyBudgetSats < 0) {
+    if (monero.lnproxyBudgetXMR < 0) {
       text = 'Must be positive';
-    } else if (lightning.lnproxyBudgetPPM > 10000) {
+    } else if (monero.lnproxyBudgetPPM > 10000) {
       text = 'Too high! (That is more than 1%)';
     }
     return text;
@@ -290,9 +290,9 @@ export const LightningPayoutForm = ({
 
   const routingBudgetHelper = function (): string {
     let text = '';
-    if (lightning.routingBudgetSats < 0) {
+    if (monero.routingBudgetXMR < 0) {
       text = 'Must be positive';
-    } else if (lightning.routingBudgetPPM > 10000) {
+    } else if (monero.routingBudgetPPM > 10000) {
       text = 'Too high! (That is more than 1%)';
     }
     return text;
@@ -301,7 +301,7 @@ export const LightningPayoutForm = ({
   const handlePasteProxy = (e: ClipboardEvent<HTMLDivElement>) => {
     e.preventDefault();
     const pastedData = e.clipboardData.getData('text');
-    setLightning({ ...lightning, lnproxyInvoice: pastedData ?? '' });
+    setMonero({ ...monero, lnproxyInvoice: pastedData ?? '' });
 
     setTimeout(() => {
       const input = document.getElementById('proxy-textfield') as HTMLInputElement;
@@ -312,7 +312,7 @@ export const LightningPayoutForm = ({
   const handlePasteInvoice = (e: ClipboardEvent<HTMLDivElement>) => {
     e.preventDefault();
     const pastedData = e.clipboardData.getData('text');
-    setLightning({ ...lightning, invoice: pastedData ?? '' });
+    setMonero({ ...monero, invoice: pastedData ?? '' });
 
     setTimeout(() => {
       const input = document.getElementById('invoice-textfield') as HTMLInputElement;
@@ -334,7 +334,7 @@ export const LightningPayoutForm = ({
         <Typography color='text.primary'>{t('Advanced options')}</Typography>
         <Switch
           size='small'
-          checked={lightning.advancedOptions}
+          checked={monero.advancedOptions}
           onChange={(e) => {
             handleAdvancedOptions(e.target.checked);
           }}
@@ -360,7 +360,7 @@ export const LightningPayoutForm = ({
             alignItems='center'
             spacing={0.5}
           >
-            <Collapse in={lightning.advancedOptions}>
+            <Collapse in={monero.advancedOptions}>
               <Grid
                 container
                 direction='column'
@@ -372,15 +372,15 @@ export const LightningPayoutForm = ({
                 <Grid item>
                   <TextField
                     sx={{ width: '14em' }}
-                    disabled={!lightning.advancedOptions}
+                    disabled={!monero.advancedOptions}
                     error={routingBudgetHelper() !== ''}
                     helperText={routingBudgetHelper()}
                     label={t('Routing Budget')}
                     required={true}
                     value={
-                      lightning.routingBudgetUnit === 'PPM'
-                        ? lightning.routingBudgetPPM
-                        : lightning.routingBudgetSats
+                      monero.routingBudgetUnit === 'PPM'
+                        ? monero.routingBudgetPPM
+                        : monero.routingBudgetXMR
                     }
                     variant='outlined'
                     InputProps={{
@@ -389,14 +389,14 @@ export const LightningPayoutForm = ({
                           <Button
                             variant='text'
                             onClick={() => {
-                              setLightning({
-                                ...lightning,
+                              setMonero({
+                                ...monero,
                                 routingBudgetUnit:
-                                  lightning.routingBudgetUnit === 'PPM' ? 'Sats' : 'PPM',
+                                  monero.routingBudgetUnit === 'PPM' ? 'XMR' : 'PPM',
                               });
                             }}
                           >
-                            {lightning.routingBudgetUnit}
+                            {monero.routingBudgetUnit}
                           </Button>
                         </InputAdornment>
                       ),
@@ -422,16 +422,16 @@ export const LightningPayoutForm = ({
                     <div>
                       <FormControlLabel
                         onChange={(e, checked) => {
-                          setLightning({
-                            ...lightning,
+                          setMonero({
+                            ...monero,
                             useLnproxy: checked,
-                            invoice: checked ? '' : lightning.invoice,
+                            invoice: checked ? '' : monero.invoice,
                           });
                         }}
-                        checked={lightning.useLnproxy}
+                        checked={monero.useLnproxy}
                         control={<Checkbox />}
                         label={
-                          <Typography color={lightning.useLnproxy ? 'primary' : 'text.secondary'}>
+                          <Typography color={monero.useLnproxy ? 'primary' : 'text.secondary'}>
                             {t('Use Lnproxy')}
                           </Typography>
                         }
@@ -449,7 +449,7 @@ export const LightningPayoutForm = ({
                 </Grid>
 
                 <Grid item>
-                  <Collapse in={lightning.useLnproxy}>
+                  <Collapse in={monero.useLnproxy}>
                     <Grid
                       container
                       direction='column'
@@ -464,9 +464,9 @@ export const LightningPayoutForm = ({
                             sx={{ width: '14em' }}
                             label={t('Server')}
                             labelId='select-label'
-                            value={lightning.lnproxyServer}
+                            value={monero.lnproxyServer}
                             onChange={(e) => {
-                              setLightning({ ...lightning, lnproxyServer: Number(e.target.value) });
+                              setMonero({ ...monero, lnproxyServer: Number(e.target.value) });
                             }}
                           >
                             {filteredProxies.map((lnproxyServer, index) => (
@@ -486,14 +486,14 @@ export const LightningPayoutForm = ({
                       <Grid item>
                         <TextField
                           sx={{ width: '14em' }}
-                          disabled={!lightning.useLnproxy}
+                          disabled={!monero.useLnproxy}
                           error={lnProxyBudgetHelper() !== ''}
                           helperText={lnProxyBudgetHelper()}
                           label={t('Proxy Budget')}
                           value={
-                            lightning.lnproxyBudgetUnit === 'PPM'
-                              ? lightning.lnproxyBudgetPPM
-                              : lightning.lnproxyBudgetSats
+                            monero.lnproxyBudgetUnit === 'PPM'
+                              ? monero.lnproxyBudgetPPM
+                              : monero.lnproxyBudgetXMR
                           }
                           variant='outlined'
                           InputProps={{
@@ -502,14 +502,14 @@ export const LightningPayoutForm = ({
                                 <Button
                                   variant='text'
                                   onClick={() => {
-                                    setLightning({
-                                      ...lightning,
+                                    setMonero({
+                                      ...monero,
                                       lnproxyBudgetUnit:
-                                        lightning.lnproxyBudgetUnit === 'PPM' ? 'Sats' : 'PPM',
+                                        monero.lnproxyBudgetUnit === 'PPM' ? 'XMR' : 'PPM',
                                     });
                                   }}
                                 >
-                                  {lightning.lnproxyBudgetUnit}
+                                  {monero.lnproxyBudgetUnit}
                                 </Button>
                               </InputAdornment>
                             ),
@@ -531,9 +531,9 @@ export const LightningPayoutForm = ({
             <Grid item>
               <div style={{ display: 'flex', alignItems: 'center' }}>
                 <Typography align='center' variant='body2'>
-                  {t('Submit invoice for {{amountSats}} Sats', {
-                    amountSats: pn(
-                      lightning.useLnproxy ? lightning.lnproxyAmount : lightning.amount,
+                  {t('Submit invoice for {{amountXMR}} XMR', {
+                    amountXMR: pn(
+                      monero.useLnproxy ? monero.lnproxyAmount : monero.amount,
                     ),
                   })}
                 </Typography>
@@ -542,9 +542,9 @@ export const LightningPayoutForm = ({
                     sx={{ height: '0.5em' }}
                     onClick={() => {
                       systemClient.copyToClipboard(
-                        lightning.useLnproxy
-                          ? String(lightning.lnproxyAmount)
-                          : String(lightning.amount),
+                        monero.useLnproxy
+                          ? String(monero.lnproxyAmount)
+                          : String(monero.amount),
                       );
                     }}
                   >
@@ -555,20 +555,20 @@ export const LightningPayoutForm = ({
             </Grid>
 
             <Grid item>
-              {lightning.useLnproxy ? (
+              {monero.useLnproxy ? (
                 <TextField
                   id='proxy-textfield'
                   fullWidth
-                  disabled={!lightning.useLnproxy}
-                  error={lightning.badLnproxy !== ''}
-                  helperText={lightning.badLnproxy !== '' ? t(lightning.badLnproxy) : ''}
+                  disabled={!monero.useLnproxy}
+                  error={monero.badLnproxy !== ''}
+                  helperText={monero.badLnproxy !== '' ? t(monero.badLnproxy) : ''}
                   label={t('Invoice to wrap')}
                   required
-                  value={lightning.lnproxyInvoice}
+                  value={monero.lnproxyInvoice}
                   variant='outlined'
                   maxRows={1}
                   onChange={(e) => {
-                    setLightning({ ...lightning, lnproxyInvoice: e.target.value ?? '' });
+                    setMonero({ ...monero, lnproxyInvoice: e.target.value ?? '' });
                   }}
                   onPaste={(e) => handlePasteProxy(e)}
                 />
@@ -578,31 +578,31 @@ export const LightningPayoutForm = ({
               <TextField
                 id='invoice-textfield'
                 fullWidth
-                sx={lightning.useLnproxy ? { borderRadius: 0 } : {}}
-                disabled={lightning.useLnproxy}
-                error={lightning.badInvoice !== ''}
-                helperText={lightning.badInvoice !== '' ? t(lightning.badInvoice) : ''}
-                label={lightning.useLnproxy ? t('Wrapped invoice') : t('Payout Lightning Invoice')}
+                sx={monero.useLnproxy ? { borderRadius: 0 } : {}}
+                disabled={monero.useLnproxy}
+                error={monero.badInvoice !== ''}
+                helperText={monero.badInvoice !== '' ? t(monero.badInvoice) : ''}
+                label={monero.useLnproxy ? t('Wrapped invoice') : t('Payout Monero Invoice')}
                 required
-                value={lightning.invoice}
-                variant={lightning.useLnproxy ? 'filled' : 'standard'}
-                multiline={!lightning.useLnproxy}
+                value={monero.invoice}
+                variant={monero.useLnproxy ? 'filled' : 'standard'}
+                multiline={!monero.useLnproxy}
                 maxRows={1}
                 onChange={(e) => {
-                  setLightning({ ...lightning, invoice: e.target.value ?? '' });
+                  setMonero({ ...monero, invoice: e.target.value ?? '' });
                 }}
                 onPaste={(e) => handlePasteInvoice(e, false)}
               />
             </Grid>
 
             <Grid item style={{ marginTop: 16 }}>
-              {lightning.useLnproxy ? (
+              {monero.useLnproxy ? (
                 <LoadingButton
                   loading={loadingLnproxy}
                   disabled={
-                    lightning.lnproxyInvoice.length < 20 ||
+                    monero.lnproxyInvoice.length < 20 ||
                     noMatchingLnProxies !== '' ||
-                    lightning.badLnproxy !== ''
+                    monero.badLnproxy !== ''
                   }
                   onClick={fetchLnproxy}
                   variant='outlined'
@@ -616,9 +616,9 @@ export const LightningPayoutForm = ({
               )}
               <LoadingButton
                 loading={loading}
-                disabled={lightning.invoice.length < 20 || lightning.badInvoice !== ''}
+                disabled={monero.invoice.length < 20 || monero.badInvoice !== ''}
                 onClick={() => {
-                  onClickSubmit(lightning.invoice);
+                  onClickSubmit(monero.invoice);
                 }}
                 variant='outlined'
                 color='primary'
@@ -638,4 +638,4 @@ export const LightningPayoutForm = ({
   );
 };
 
-export default LightningPayoutForm;
+export default MoneroPayoutForm;

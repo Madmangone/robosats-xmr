@@ -24,7 +24,7 @@ import {
   DisputePrompt,
   DisputeWaitPeerPrompt,
   DisputeWaitResolutionPrompt,
-  SendingSatsPrompt,
+  SendingXMRPrompt,
   SuccessfulPrompt,
   RoutingFailedPrompt,
   DisputeWinnerPrompt,
@@ -32,7 +32,7 @@ import {
 } from './Prompts';
 import BondStatus from './BondStatus';
 import CancelButton from './CancelButton';
-import { defaultLightning, type LightningForm, defaultOnchain, type OnchainForm } from './Forms';
+import { defaultMonero, type MoneroForm, defaultOnchain, type OnchainForm } from './Forms';
 
 import { type Order } from '../../models';
 import { type EncryptedChatMessage } from './EncryptedChat';
@@ -135,7 +135,7 @@ const TradeBox = ({ currentOrder }: TradeBoxProps): React.JSX.Element => {
 
   // Forms
   const [onchain, setOnchain] = useState<OnchainForm>(defaultOnchain);
-  const [lightning, setLightning] = useState<LightningForm>(defaultLightning);
+  const [monero, setMonero] = useState<MoneroForm>(defaultMonero);
   const [dispute, setDispute] = useState<DisputeForm>(defaultDispute);
 
   // Chat
@@ -155,7 +155,7 @@ const TradeBox = ({ currentOrder }: TradeBoxProps): React.JSX.Element => {
         payment_method: newOrder.payment_method,
         is_explicit: newOrder.is_explicit,
         premium: newOrder.is_explicit ? null : newOrder.premium,
-        satoshis: newOrder.is_explicit ? newOrder.satoshis : null,
+        piconeros: newOrder.is_explicit ? newOrder.piconeros : null,
         public_duration: newOrder.public_duration,
         escrow_duration: newOrder.escrow_duration,
         bond_size: newOrder.bond_size,
@@ -213,7 +213,7 @@ const TradeBox = ({ currentOrder }: TradeBoxProps): React.JSX.Element => {
           if (data.bad_address && data.bad_address !== '') {
             setOnchain({ ...onchain, badAddress: data.bad_address });
           } else if (data.bad_invoice && data.bad_invoice !== '') {
-            setLightning({ ...lightning, badInvoice: data.bad_invoice });
+            setMonero({ ...monero, badInvoice: data.bad_invoice });
           } else if (data.bad_statement && data.bad_statement !== '') {
             setDispute({ ...dispute, badStatement: data.bad_statement });
           }
@@ -267,7 +267,7 @@ const TradeBox = ({ currentOrder }: TradeBoxProps): React.JSX.Element => {
         submitAction({
           action: 'update_invoice',
           invoice: signedInvoice,
-          routing_budget_ppm: lightning.routingBudgetPPM,
+          routing_budget_ppm: monero.routingBudgetPPM,
         });
       });
     }
@@ -319,7 +319,7 @@ const TradeBox = ({ currentOrder }: TradeBoxProps): React.JSX.Element => {
     } else if (order.is_buyer && (order.status === 6 || order.status === 8)) {
       setOpen({ ...open, webln: true });
       webln
-        .makeInvoice(() => lightning.amount)
+        .makeInvoice(() => monero.amount)
         .then((invoice: object) => {
           if (invoice !== undefined) {
             updateInvoice(invoice.paymentRequest);
@@ -362,8 +362,8 @@ const TradeBox = ({ currentOrder }: TradeBoxProps): React.JSX.Element => {
       // 0: 'Waiting for maker bond'
       case 0:
         if (isMaker) {
-          baseContract.title = 'Lock {{amountSats}} Sats to PUBLISH order';
-          baseContract.titleVariables = { amountSats: pn(order.bond_satoshis) };
+          baseContract.title = 'Lock {{amountXMR}} XMR to PUBLISH order';
+          baseContract.titleVariables = { amountXMR: pn(order.bond_piconeros) };
           baseContract.prompt = () => {
             return <LockInvoicePrompt order={order} concept={'bond'} />;
           };
@@ -411,8 +411,8 @@ const TradeBox = ({ currentOrder }: TradeBoxProps): React.JSX.Element => {
           };
           baseContract.bondStatus = 'locked';
         } else {
-          baseContract.title = 'Lock {{amountSats}} Sats to TAKE order';
-          baseContract.titleVariables = { amountSats: pn(order.bond_satoshis) };
+          baseContract.title = 'Lock {{amountXMR}} XMR to TAKE order';
+          baseContract.titleVariables = { amountXMR: pn(order.bond_piconeros) };
           baseContract.prompt = () => {
             return <LockInvoicePrompt order={order} concept={'bond'} />;
           };
@@ -443,16 +443,16 @@ const TradeBox = ({ currentOrder }: TradeBoxProps): React.JSX.Element => {
         baseContract.bondStatus = 'locked';
         if (isBuyer) {
           baseContract.title = 'Submit payout info';
-          baseContract.titleVariables = { amountSats: pn(order.invoice_amount) };
+          baseContract.titleVariables = { amountXMR: pn(order.invoice_amount) };
           baseContract.prompt = function () {
             return (
               <PayoutPrompt
                 order={order}
                 settings={settings}
                 onClickSubmitInvoice={updateInvoice}
-                loadingLightning={loadingButtons.submitInvoice}
-                lightning={lightning}
-                setLightning={setLightning}
+                loadingMonero={loadingButtons.submitInvoice}
+                monero={monero}
+                setMonero={setMonero}
                 onClickSubmitAddress={updateAddress}
                 loadingOnchain={loadingButtons.submitAddress}
                 onchain={onchain}
@@ -461,8 +461,8 @@ const TradeBox = ({ currentOrder }: TradeBoxProps): React.JSX.Element => {
             );
           };
         } else {
-          baseContract.title = 'Lock {{amountSats}} Sats as collateral';
-          baseContract.titleVariables = { amountSats: pn(order.escrow_satoshis) };
+          baseContract.title = 'Lock {{amountXMR}} XMR as collateral';
+          baseContract.titleVariables = { amountXMR: pn(order.escrow_piconeros) };
           baseContract.titleColor = 'warning';
           baseContract.prompt = () => {
             return <LockInvoicePrompt order={order} concept={'escrow'} />;
@@ -479,8 +479,8 @@ const TradeBox = ({ currentOrder }: TradeBoxProps): React.JSX.Element => {
             return <EscrowWaitPrompt />;
           };
         } else {
-          baseContract.title = 'Lock {{amountSats}} Sats as collateral';
-          baseContract.titleVariables = { amountSats: pn(order.escrow_satoshis) };
+          baseContract.title = 'Lock {{amountXMR}} XMR as collateral';
+          baseContract.titleVariables = { amountXMR: pn(order.escrow_piconeros) };
           baseContract.titleColor = 'warning';
           baseContract.prompt = () => {
             return <LockInvoicePrompt order={order} concept={'escrow'} />;
@@ -493,16 +493,16 @@ const TradeBox = ({ currentOrder }: TradeBoxProps): React.JSX.Element => {
         baseContract.bondStatus = 'locked';
         if (isBuyer) {
           baseContract.title = 'Submit payout info';
-          baseContract.titleVariables = { amountSats: pn(order.invoice_amount) };
+          baseContract.titleVariables = { amountXMR: pn(order.invoice_amount) };
           baseContract.prompt = () => {
             return (
               <PayoutPrompt
                 order={order}
                 settings={settings}
                 onClickSubmitInvoice={updateInvoice}
-                loadingLightning={loadingButtons.submitInvoice}
-                lightning={lightning}
-                setLightning={setLightning}
+                loadingMonero={loadingButtons.submitInvoice}
+                monero={monero}
+                setMonero={setMonero}
                 onClickSubmitAddress={updateAddress}
                 loadingOnchain={loadingButtons.submitAddress}
                 onchain={onchain}
@@ -581,13 +581,13 @@ const TradeBox = ({ currentOrder }: TradeBoxProps): React.JSX.Element => {
       // 12: 'Collaboratively cancelled'
       case 12:
         break;
-      // 13: 'Sending satoshis to buyer'
+      // 13: 'Sending piconeros to buyer'
       case 13:
         if (isBuyer) {
           baseContract.bondStatus = 'unlocked';
-          baseContract.title = 'Attempting Lightning Payment';
+          baseContract.title = 'Attempting Monero Payment';
           baseContract.prompt = function () {
-            return <SendingSatsPrompt />;
+            return <SendingXMRPrompt />;
           };
         } else {
           baseContract.title = 'Trade finished!';
@@ -633,20 +633,20 @@ const TradeBox = ({ currentOrder }: TradeBoxProps): React.JSX.Element => {
         };
         break;
 
-      // 15: 'Failed lightning network routing'
+      // 15: 'Failed monero network routing'
       case 15:
         if (isBuyer) {
           baseContract.bondStatus = 'unlocked';
-          baseContract.title = 'Lightning Routing Failed';
+          baseContract.title = 'Monero Routing Failed';
           baseContract.prompt = function () {
             return (
               <RoutingFailedPrompt
                 order={order}
                 settings={settings}
                 onClickSubmitInvoice={updateInvoice}
-                loadingLightning={loadingButtons.submitInvoice}
-                lightning={lightning}
-                setLightning={setLightning}
+                loadingMonero={loadingButtons.submitInvoice}
+                monero={monero}
+                setMonero={setMonero}
               />
             );
           };

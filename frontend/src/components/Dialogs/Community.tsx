@@ -55,8 +55,8 @@ const CommunityDialog = ({ open = false, onClose }: Props): React.JSX.Element =>
             </ListItemIcon>
 
             <ListItemText
-              primary={t('Join RoboSats SimpleX group')}
-              secondary={t('RoboSats main public support')}
+              primary={t('Join RoboXMR SimpleX group')}
+              secondary={t('RoboXMR main public support')}
             />
           </ListItemButton>
 
@@ -77,7 +77,7 @@ const CommunityDialog = ({ open = false, onClose }: Props): React.JSX.Element =>
             </ListItemIcon>
 
             <ListItemText
-              primary={t('Follow RoboSats in Nostr')}
+              primary={t('Follow RoboXMR in Nostr')}
               secondary={t('Nostr Official Account')}
             />
           </ListItemButton>
@@ -87,7 +87,7 @@ const CommunityDialog = ({ open = false, onClose }: Props): React.JSX.Element =>
           <ListItemButton
             component='a'
             target='_blank'
-            href='https://github.com/RoboSats/robosats/issues'
+            href='https://github.com/RoboXMR/robosats/issues'
             rel='noreferrer'
           >
             <ListItemIcon>
@@ -96,7 +96,7 @@ const CommunityDialog = ({ open = false, onClose }: Props): React.JSX.Element =>
 
             <ListItemText
               primary={t('Tell us about a new feature or a bug')}
-              secondary={t('Github Issues - The Robotic Satoshis Open Source Project')}
+              secondary={t('Github Issues - The Robotic Piconeros Open Source Project')}
             />
           </ListItemButton>
         </List>

@@ -82,7 +82,7 @@ const SelectCoordinator: React.FC<SelectCoordinatorProps> = ({
           enterDelay={700}
           enterNextDelay={2000}
           title={t(
-            'The provider the lightning and communication infrastructure. The host will be in charge of providing support and solving disputes. The trade fees are set by the host. Make sure to only select order hosts that you trust!',
+            'The provider the monero and communication infrastructure. The host will be in charge of providing support and solving disputes. The trade fees are set by the host. Make sure to only select order hosts that you trust!',
           )}
         >
           <Grid container style={{ marginTop: 10, width: '100%' }}>

@@ -37,7 +37,7 @@ const Main: React.FC = () => {
     <Router>
       {show ? (
         <TestnetTypography color='secondary' align='center'>
-          <i>{t('Using Testnet Bitcoin')}</i>
+          <i>{t('Using Testnet Monero')}</i>
         </TestnetTypography>
       ) : (
         <></>

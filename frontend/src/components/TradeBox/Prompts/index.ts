@@ -10,7 +10,7 @@ export { ChatPrompt } from './Chat';
 export { DisputePrompt } from './Dispute';
 export { DisputeWaitPeerPrompt } from './DisputeWaitPeer';
 export { DisputeWaitResolutionPrompt } from './DisputeWaitResolution';
-export { SendingSatsPrompt } from './SendingSats';
+export { SendingXMRPrompt } from './SendingXMR';
 export { SuccessfulPrompt } from './Successful';
 export { RoutingFailedPrompt } from './RoutingFailed';
 export { DisputeWinnerPrompt } from './DisputeWinner';

@@ -27,10 +27,10 @@ const VisitThirdParty = ({ open, onClose, thirdPartyOrder }: Props): React.JSX.E
         <DialogContentText>
           {thirdPartyOrder?.link
             ? t(
-                'This order is not managed by a RoboSats coordinator. Please ensure you are comfortable with the privacy and trust trade-offs. You will open an external link or app',
+                'This order is not managed by a RoboXMR coordinator. Please ensure you are comfortable with the privacy and trust trade-offs. You will open an external link or app',
               )
             : t(
-                "This order is not managed by a RoboSats coordinator. {{alias}} does not provide web access to it; please check {{alias}}'s platform for more details.",
+                "This order is not managed by a RoboXMR coordinator. {{alias}} does not provide web access to it; please check {{alias}}'s platform for more details.",
                 { alias: thirdPartyOrder?.coordinatorShortAlias },
               )}
         </DialogContentText>

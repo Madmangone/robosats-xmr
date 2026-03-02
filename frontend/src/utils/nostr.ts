@@ -25,7 +25,7 @@ const eventToPublicOrder = (
     payment_method: '',
     is_explicit: false,
     premium: '',
-    satoshis: null,
+    piconeros: null,
     maker: null,
     escrow_duration: 0,
     bond_size: '',
@@ -33,7 +33,7 @@ const eventToPublicOrder = (
     longitude: null,
     maker_nick: null,
     maker_hash_id: null,
-    satoshis_now: null,
+    piconeros_now: null,
     price: null,
   };
 

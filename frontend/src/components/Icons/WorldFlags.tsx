@@ -98,7 +98,7 @@ const FlagWithProps = ({
   if (code === 'UZS') flag = <Flags.UZ {...defaultProps} />;
   if (code === 'ANY') flag = <EarthIcon {...defaultProps} />;
   if (code === 'XAU') flag = <GoldIcon {...defaultProps} />;
-  if (code === 'BTC') flag = <SwapCallsIcon color='primary' />;
+  if (code === 'XMR') flag = <SwapCallsIcon color='primary' />;
 
   return <div style={{ width: '2em', height: '1.428em', maxHeight: '1.428em' }}>{flag}</div>;
 };

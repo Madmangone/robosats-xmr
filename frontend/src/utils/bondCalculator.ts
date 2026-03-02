@@ -24,18 +24,18 @@ export const calculateBondAmount = ({
 
   if (!amountToCalc) return null;
 
-  let tradeAmountSats = 0;
+  let tradeAmountXMR = 0;
 
   if (mode === 'fiat') {
-    tradeAmountSats = (amountToCalc / price) * 100_000_000;
+    tradeAmountXMR = (amountToCalc / price) * 100_000_000;
   } else {
     const premiumFactor = 1 + premium / 100;
     if (premiumFactor <= 0) {
-      tradeAmountSats = 0;
+      tradeAmountXMR = 0;
     } else {
-      tradeAmountSats = (amountToCalc * 100_000_000) / premiumFactor;
+      tradeAmountXMR = (amountToCalc * 100_000_000) / premiumFactor;
     }
   }
 
-  return Math.floor(tradeAmountSats * (bondSize / 100));
+  return Math.floor(tradeAmountXMR * (bondSize / 100));
 };

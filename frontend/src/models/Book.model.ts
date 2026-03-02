@@ -12,8 +12,8 @@ export interface PublicOrder {
   payment_method: string;
   is_explicit: false;
   premium: string;
-  satoshis: number | null;
-  satoshis_now: number | null;
+  piconeros: number | null;
+  piconeros_now: number | null;
   latitude: number | null;
   longitude: number | null;
   bond_size: string;

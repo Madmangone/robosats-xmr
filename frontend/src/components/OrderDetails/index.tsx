@@ -41,7 +41,7 @@ import { fiatMethods, PaymentStringAsIcons, swapMethods } from '../../components
 import { FlagWithProps, SendReceiveIcon } from '../Icons';
 import LinearDeterminate from './LinearDeterminate';
 
-import { pn, amountToString, computeSats, statusBadgeColor } from '../../utils';
+import { pn, amountToString, computeXMR, statusBadgeColor } from '../../utils';
 import TakeButton from './TakeButton';
 import { F2fMapDialog, OrderDescriptionDialog } from '../Dialogs';
 import { type UseFederationStoreType, FederationContext } from '../../contexts/FederationContext';
@@ -94,7 +94,7 @@ const OrderDetails = ({
           currentOrder.amount > 0 ? false : currentOrder.has_range,
           currentOrder.min_amount * 100000000,
           currentOrder.max_amount * 100000000,
-        ) + ' Sats'
+        ) + ' XMR'
       );
     } else {
       return (
@@ -181,10 +181,10 @@ const OrderDetails = ({
     }
   };
 
-  const satsSummary = useMemo(() => {
+  const XMRSummary = useMemo(() => {
     let send: string = '';
     let receive: string = '';
-    let sats: string = '';
+    let XMR: string = '';
     const order = currentOrder;
 
     if (order === null) return {};
@@ -194,70 +194,70 @@ const OrderDetails = ({
       ? (coordinator.info?.maker_fee ?? 0)
       : (coordinator.info?.taker_fee ?? 0);
     const defaultRoutingBudget = 0.001;
-    const btc_now = order.satoshis_now / 100000000;
+    const btc_now = order.piconeros_now / 100000000;
     const rate =
       (order.amount && order.amount > 0 ? Number(order.amount) : Number(order.max_amount)) /
       btc_now;
 
     if (isBuyer) {
       if (order.invoice_amount) {
-        sats = pn(order.invoice_amount);
-      } else if (order.trade_satoshis) {
-        sats = pn(order.trade_satoshis);
+        XMR = pn(order.invoice_amount);
+      } else if (order.trade_piconeros) {
+        XMR = pn(order.trade_piconeros);
       } else if (order.amount && order.amount > 0) {
-        sats = computeSats({
+        XMR = computeXMR({
           amount: order.amount,
           fee: -tradeFee,
           routingBudget: defaultRoutingBudget,
           rate,
         });
       } else {
-        const min = computeSats({
+        const min = computeXMR({
           amount: Number(order.min_amount),
           fee: -tradeFee,
           routingBudget: defaultRoutingBudget,
           rate,
         });
-        const max = computeSats({
+        const max = computeXMR({
           amount: Number(order.max_amount),
           fee: -tradeFee,
           routingBudget: defaultRoutingBudget,
           rate,
         });
-        sats = `${String(min)}-${String(max)}`;
+        XMR = `${String(min)}-${String(max)}`;
       }
       send = t('You send via {{method}} {{amount}}', {
         amount: amountString,
         method: order.payment_method,
       });
-      receive = t('You receive {{amount}} Sats (Approx)', {
-        amount: sats,
+      receive = t('You receive {{amount}} XMR (Approx)', {
+        amount: XMR,
       });
     } else {
-      if (order.trade_satoshis) {
-        sats = pn(order.trade_satoshis);
-      } else if (order.escrow_satoshis) {
-        sats = pn(order.escrow_satoshis);
+      if (order.trade_piconeros) {
+        XMR = pn(order.trade_piconeros);
+      } else if (order.escrow_piconeros) {
+        XMR = pn(order.escrow_piconeros);
       } else if (order.amount && order.amount > 0) {
-        sats = computeSats({
+        XMR = computeXMR({
           amount: order.amount,
           fee: tradeFee,
           rate,
         });
       } else {
-        const min = computeSats({
+        const min = computeXMR({
           amount: order.min_amount,
           fee: tradeFee,
           rate,
         });
-        const max = computeSats({
+        const max = computeXMR({
           amount: order.max_amount,
           fee: tradeFee,
           rate,
         });
-        sats = `${String(min)}-${String(max)}`;
+        XMR = `${String(min)}-${String(max)}`;
       }
-      send = t('You send via Lightning {{amount}} Sats (Approx)', { amount: sats });
+      send = t('You send via Monero {{amount}} XMR (Approx)', { amount: XMR });
       receive = t('You receive via {{method}} {{amount}}', {
         amount: amountString,
         method: order.payment_method,
@@ -482,7 +482,7 @@ const OrderDetails = ({
 
               {currentOrder?.price_now !== undefined ? (
                 <ListItemText
-                  primary={t('{{price}} {{currencyCode}}/BTC - Premium: {{premium}}%', {
+                  primary={t('{{price}} {{currencyCode}}/XMR - Premium: {{premium}}%', {
                     price: pn(currentOrder?.price_now),
                     currencyCode,
                     premium: currentOrder?.premium_now,
@@ -493,8 +493,8 @@ const OrderDetails = ({
 
               {currentOrder?.price_now === undefined && currentOrder?.is_explicit ? (
                 <ListItemText
-                  primary={pn(currentOrder?.satoshis)}
-                  secondary={t('Amount of Satoshis')}
+                  primary={pn(currentOrder?.piconeros)}
+                  secondary={t('Amount of Piconeros')}
                 />
               ) : null}
 
@@ -636,7 +636,7 @@ const OrderDetails = ({
               </Typography>
               <Typography component='li' variant='body2'>
                 {t(
-                  'Scammers can exploit this vulnerability in the fiat system to take away both your bitcoin and your fiat.',
+                  'Scammers can exploit this vulnerability in the fiat system to take away both your monero and your fiat.',
                 )}
               </Typography>
             </Box>

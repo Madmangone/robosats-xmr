@@ -24,7 +24,7 @@ import {
 } from '@mui/icons-material';
 
 import { pn } from '../../utils';
-import { BitcoinSignIcon } from '../Icons';
+import { MoneroSignIcon } from '../Icons';
 import { FederationContext } from '../../contexts/FederationContext';
 
 interface Props {
@@ -70,7 +70,7 @@ const ExchangeDialog = ({ open = false, onClose }: Props): React.JSX.Element => 
 
             <ListItemText
               primary={federation.exchange.onlineCoordinators}
-              secondary={t('Online RoboSats coordinators')}
+              secondary={t('Online RoboXMR coordinators')}
             />
           </ListItem>
 
@@ -82,7 +82,7 @@ const ExchangeDialog = ({ open = false, onClose }: Props): React.JSX.Element => 
 
             <ListItemText
               primary={federation.exchange.enabledCoordinators}
-              secondary={t('Enabled RoboSats coordinators')}
+              secondary={t('Enabled RoboXMR coordinators')}
             />
           </ListItem>
 
@@ -119,7 +119,7 @@ const ExchangeDialog = ({ open = false, onClose }: Props): React.JSX.Element => 
             </ListItemIcon>
 
             <ListItemText
-              primary={`${pn(federation.exchange.info.book_liquidity)} Sats`}
+              primary={`${pn(federation.exchange.info.book_liquidity)} XMR`}
               secondary={t('Book liquidity')}
             />
           </ListItem>
@@ -148,7 +148,7 @@ const ExchangeDialog = ({ open = false, onClose }: Props): React.JSX.Element => 
               primary={`${String(
                 federation.exchange.info.last_day_nonkyc_btc_premium.toPrecision(3),
               )}%`}
-              secondary={t('24h non-KYC bitcoin premium')}
+              secondary={t('24h non-KYC monero premium')}
             />
           </ListItem>
 
@@ -168,7 +168,7 @@ const ExchangeDialog = ({ open = false, onClose }: Props): React.JSX.Element => 
                 }}
               >
                 {pn(federation.exchange.info.last_day_volume.toFixed(8))}
-                <BitcoinSignIcon sx={{ width: '0.6em', height: '0.6em' }} color='text.secondary' />
+                <MoneroSignIcon sx={{ width: '0.6em', height: '0.6em' }} color='text.secondary' />
               </div>
             </ListItemText>
           </ListItem>
@@ -189,7 +189,7 @@ const ExchangeDialog = ({ open = false, onClose }: Props): React.JSX.Element => 
                 }}
               >
                 {pn(federation.exchange.info.lifetime_volume.toFixed(8))}
-                <BitcoinSignIcon sx={{ width: '0.6em', height: '0.6em' }} color='text.secondary' />
+                <MoneroSignIcon sx={{ width: '0.6em', height: '0.6em' }} color='text.secondary' />
               </div>
             </ListItemText>
           </ListItem>

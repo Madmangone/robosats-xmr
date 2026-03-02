@@ -186,7 +186,7 @@ export const SuccessfulPrompt = ({
           {hostRating === 5 ? (
             <Typography variant='body2' align='center'>
               {t(
-                'RoboSats gets better with more liquidity and users. Tell a bitcoiner friend about Robosats!',
+                'RoboXMR gets better with more liquidity and users. Tell a moneroer friend about Robosats!',
               )}
             </Typography>
           ) : (
@@ -200,7 +200,7 @@ export const SuccessfulPrompt = ({
                   SimpleX
                 </Link>
                 {' / '}
-                <Link target='_blank' href='https://github.com/RoboSats/robosats/issues'>
+                <Link target='_blank' href='https://github.com/RoboXMR/robosats/issues'>
                   Github
                 </Link>
                 )

@@ -37,9 +37,9 @@ const SelfhostedAlert = (): React.JSX.Element => {
               </Button>
             }
           >
-            <AlertTitle>{t('You are self-hosting RoboSats')}</AlertTitle>
+            <AlertTitle>{t('You are self-hosting RoboXMR')}</AlertTitle>
             {t(
-              'RoboSats client is served from your own node granting you the strongest security and privacy.',
+              'RoboXMR client is served from your own node granting you the strongest security and privacy.',
             )}
           </Alert>
         </Paper>

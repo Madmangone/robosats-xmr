@@ -4,14 +4,14 @@ import { Box, CircularProgress, Grid, Typography, useTheme } from '@mui/material
 import Countdown, { type CountdownRenderProps, zeroPad } from 'react-countdown';
 
 import { type Order, type Settings } from '../../../models';
-import { type LightningForm, LightningPayoutForm } from '../Forms';
+import { type MoneroForm, MoneroPayoutForm } from '../Forms';
 
 interface RoutingFailedPromptProps {
   order: Order;
   onClickSubmitInvoice: (invoice: string) => void;
-  lightning: LightningForm;
-  loadingLightning: boolean;
-  setLightning: (state: LightningForm) => void;
+  monero: MoneroForm;
+  loadingMonero: boolean;
+  setMonero: (state: MoneroForm) => void;
   settings: Settings;
 }
 
@@ -45,9 +45,9 @@ const FailureReason = ({ failureReason }: FailureReasonProps): React.JSX.Element
 export const RoutingFailedPrompt = ({
   order,
   onClickSubmitInvoice,
-  loadingLightning,
-  lightning,
-  setLightning,
+  loadingMonero,
+  monero,
+  setMonero,
   settings,
 }: RoutingFailedPromptProps): React.JSX.Element => {
   const { t } = useTranslation();
@@ -100,12 +100,12 @@ export const RoutingFailedPrompt = ({
         )}
 
         <Grid item>
-          <LightningPayoutForm
+          <MoneroPayoutForm
             order={order}
             settings={settings}
-            loading={loadingLightning}
-            lightning={lightning}
-            setLightning={setLightning}
+            loading={loadingMonero}
+            monero={monero}
+            setMonero={setMonero}
             onClickSubmit={onClickSubmitInvoice}
           />
         </Grid>
@@ -127,7 +127,7 @@ export const RoutingFailedPrompt = ({
         <Grid item>
           <Typography variant='body2'>
             {t(
-              'RoboSats will try to pay your invoice 3 times with a one minute pause in between. If it keeps failing, you will be able to submit a new invoice. Check whether you have enough inbound liquidity. Remember that lightning nodes must be online in order to receive payments.',
+              'RoboXMR will try to pay your invoice 3 times with a one minute pause in between. If it keeps failing, you will be able to submit a new invoice. Check whether you have enough inbound liquidity. Remember that monero nodes must be online in order to receive payments.',
             )}
           </Typography>
         </Grid>

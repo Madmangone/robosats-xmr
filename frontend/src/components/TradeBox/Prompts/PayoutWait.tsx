@@ -11,7 +11,7 @@ export const PayoutWaitPrompt = (): React.JSX.Element => {
       <ListItem>
         <Typography variant='body2' align='left'>
           {t(
-            'We are waiting for the buyer to post a lightning invoice. Once he does, you will be able to directly communicate the payment details.',
+            'We are waiting for the buyer to post a monero invoice. Once he does, you will be able to directly communicate the payment details.',
           )}
         </Typography>
       </ListItem>

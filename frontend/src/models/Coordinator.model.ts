@@ -111,7 +111,7 @@ function calculateSizeLimit(inputDate: Date): number {
   for (let i = 1; i < numDifficultyAdjustments; i++) {
     value *= 1.3;
     if (i >= 12) {
-      // after 12 difficulty adjustments (6 weeks) limit becomes 21 BTC (mature coordinator)
+      // after 12 difficulty adjustments (6 weeks) limit becomes 21 XMR (mature coordinator)
       return 21 * 100000000;
     }
   }

@@ -18,7 +18,7 @@ export const DisputeWaitPeerPrompt = (): React.JSX.Element => {
       <ListItem>
         <Typography variant='body2'>
           {t(
-            'Please, save the information needed to identify your order and your payments: order ID; payment hashes of the bonds or escrow (check on your lightning wallet); exact amount of satoshis; and robot nickname. You will have to identify yourself using that information if you contact your trade coordinator.',
+            'Please, save the information needed to identify your order and your payments: order ID; payment hashes of the bonds or escrow (check on your monero wallet); exact amount of piconeros; and robot nickname. You will have to identify yourself using that information if you contact your trade coordinator.',
           )}
         </Typography>
       </ListItem>

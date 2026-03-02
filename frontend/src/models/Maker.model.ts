@@ -9,7 +9,7 @@ export interface Maker {
   paymentMethodsText: string;
   badPaymentMethod: boolean;
   premium: number | null;
-  satoshis: string;
+  piconeros: string;
   publicExpiryTime: Date;
   publicDuration: number;
   escrowExpiryTime: Date;
@@ -17,7 +17,7 @@ export interface Maker {
   bondSize: number;
   minAmount: number | null;
   maxAmount: number | null;
-  badSatoshisText: string;
+  badPiconerosText: string;
   badPremiumText: string;
   latitude: number | null;
   longitude: number | null;
@@ -38,7 +38,7 @@ export const defaultMaker: Maker = {
   paymentMethodsText: 'not specified',
   badPaymentMethod: false,
   premium: null,
-  satoshis: '',
+  piconeros: '',
   publicExpiryTime: new Date(0, 0, 0, 23, 59),
   publicDuration: 86340,
   escrowExpiryTime: new Date(0, 0, 0, 3, 0),
@@ -47,7 +47,7 @@ export const defaultMaker: Maker = {
   minAmount: null,
   maxAmount: null,
   badPremiumText: '',
-  badSatoshisText: '',
+  badPiconerosText: '',
   latitude: null,
   longitude: null,
   password: null,

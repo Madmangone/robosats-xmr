@@ -1,5 +1,5 @@
-export { LightningPayoutForm, defaultLightning } from './LightningPayout';
+export { MoneroPayoutForm, defaultMonero } from './MoneroPayout';
 export { OnchainPayoutForm, defaultOnchain } from './OnchainPayout';
 
-export type { LightningForm } from './LightningPayout';
+export type { MoneroForm } from './MoneroPayout';
 export type { OnchainForm } from './OnchainPayout';

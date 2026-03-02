@@ -12,7 +12,7 @@ import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import SwapCalls from '@mui/icons-material/SwapCalls';
 import { FederationContext, type UseFederationStoreType } from '../../contexts/FederationContext';
 import RobotAvatar from '../RobotAvatar';
-import RoboSatsNoText from '../Icons/RoboSatsNoText';
+import RoboXMRNoText from '../Icons/RoboXMRNoText';
 
 interface BookControlProps {
   width: number;
@@ -406,7 +406,7 @@ const BookControl = ({
             </MenuItem>
             <MenuItem value='robosats'>
               <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap' }}>
-                <RoboSatsNoText sx={{ color: '#1976d2' }} />
+                <RoboXMRNoText sx={{ color: '#1976d2' }} />
               </div>
             </MenuItem>
             {federation

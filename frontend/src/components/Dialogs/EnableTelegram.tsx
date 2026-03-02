@@ -75,7 +75,7 @@ const EnableTelegramDialog = ({ open, onClose, tgBotName, tgToken }: Props): Rea
         </Grid>
         <DialogContentText id='alert-dialog-description'>
           {t(
-            'You will be taken to a conversation with RoboSats telegram bot. Simply open the chat and press Start. Note that by enabling telegram notifications you might lower your level of anonymity.',
+            'You will be taken to a conversation with RoboXMR telegram bot. Simply open the chat and press Start. Note that by enabling telegram notifications you might lower your level of anonymity.',
           )}
         </DialogContentText>
       </DialogContent>

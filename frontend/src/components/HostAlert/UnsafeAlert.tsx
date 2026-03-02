@@ -77,9 +77,9 @@ const UnsafeAlert = (): React.JSX.Element => {
             </Button>
           }
         >
-          <AlertTitle>{t('You are not using RoboSats privately')}</AlertTitle>
+          <AlertTitle>{t('You are not using RoboXMR privately')}</AlertTitle>
           <Trans i18nKey='unsafe_alert'>
-            <a>To fully enable RoboSats and protect your data and privacy, use </a>
+            <a>To fully enable RoboXMR and protect your data and privacy, use </a>
             <Link href='https://www.torproject.org/download/' target='_blank'>
               Tor Browser
             </Link>

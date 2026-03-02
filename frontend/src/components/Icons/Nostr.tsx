@@ -1,7 +1,7 @@
 import React from 'react';
 import { SvgIcon, type SvgIconProps } from '@mui/material';
 
-// By SatsCoffee https://github.com/satscoffee/nostr_icons/blob/main/nostr_logo_blk.svg
+// By XMRCoffee https://github.com/satscoffee/nostr_icons/blob/main/nostr_logo_blk.svg
 const Nostr: React.FC<SvgIconProps> = (props) => {
   return (
     <SvgIcon sx={props.sx} color={props.color} viewBox='0 0 875 875'>

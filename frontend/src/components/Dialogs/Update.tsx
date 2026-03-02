@@ -45,14 +45,14 @@ const UpdateDialog = ({ coordinatorVersion, clientVersion }: Props): React.JSX.E
     >
       <DialogContent>
         <Typography component='h5' variant='h5'>
-          {t('Update your RoboSats client')}
+          {t('Update your RoboXMR client')}
         </Typography>
 
         <br />
 
         <Typography>
           {t(
-            'The RoboSats coordinator is on version {{coordinatorString}}, but your client app is {{clientString}}. This version mismatch might lead to a bad user experience.',
+            'The RoboXMR coordinator is on version {{coordinatorString}}, but your client app is {{clientString}}. This version mismatch might lead to a bad user experience.',
             { coordinatorString, clientString },
           )}
         </Typography>
@@ -61,7 +61,7 @@ const UpdateDialog = ({ coordinatorVersion, clientVersion }: Props): React.JSX.E
           <ListItemButton
             component='a'
             target='_blank'
-            href={`https://github.com/RoboSats/robosats/releases/tag/${coordinatorString}-alpha`}
+            href={`https://github.com/RoboXMR/robosats/releases/tag/${coordinatorString}-alpha`}
             rel='noreferrer'
           >
             <ListItemIcon>
@@ -69,10 +69,10 @@ const UpdateDialog = ({ coordinatorVersion, clientVersion }: Props): React.JSX.E
             </ListItemIcon>
 
             <ListItemText
-              secondary={t('Download RoboSats {{coordinatorString}} APK from Github releases', {
+              secondary={t('Download RoboXMR {{coordinatorString}} APK from Github releases', {
                 coordinatorString,
               })}
-              primary={t('On Android RoboSats app ')}
+              primary={t('On Android RoboXMR app ')}
             />
           </ListItemButton>
 

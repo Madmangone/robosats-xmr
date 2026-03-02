@@ -26,7 +26,7 @@ import {
   School,
   SettingsApplications,
 } from '@mui/icons-material';
-import { TorIcon, RoboSatsTextIcon } from '../../../components/Icons';
+import { TorIcon, RoboXMRTextIcon } from '../../../components/Icons';
 import RobotAvatar from '../../../components/RobotAvatar';
 import { useTranslation } from 'react-i18next';
 import { UseFederationStoreType, FederationContext } from '../../../contexts/FederationContext';
@@ -182,7 +182,7 @@ const MenuDrawer = ({ show, setShow }: MenuDrawerProps): React.JSX.Element => {
               <ListItemIcon>
                 <Info />
               </ListItemIcon>
-              <ListItemText primary={t('RoboSats')} />
+              <ListItemText primary={t('RoboXMR')} />
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
@@ -194,7 +194,7 @@ const MenuDrawer = ({ show, setShow }: MenuDrawerProps): React.JSX.Element => {
               <ListItemIcon>
                 <School />
               </ListItemIcon>
-              <ListItemText primary={t('Learn RoboSats')} />
+              <ListItemText primary={t('Learn RoboXMR')} />
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
@@ -267,7 +267,7 @@ const MenuDrawer = ({ show, setShow }: MenuDrawerProps): React.JSX.Element => {
                 <stop offset={1} stopColor={theme.palette.secondary.main} />
               </linearGradient>
             </svg>
-            <RoboSatsTextIcon
+            <RoboXMRTextIcon
               sx={{
                 fill: 'url(#linearColors)',
                 height: `3.5em`,

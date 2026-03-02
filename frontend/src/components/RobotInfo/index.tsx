@@ -377,7 +377,7 @@ const RobotInfo: React.FC<Props> = ({ coordinator, onClose }: Props) => {
                   placement='bottom'
                   enterTouchDelay={0}
                   title={t(
-                    "Stealth lightning invoices do not contain details about the trade except an order reference. Enable this setting if you don't want to disclose details to a custodial lightning wallet.",
+                    "Stealth monero invoices do not contain details about the trade except an order reference. Enable this setting if you don't want to disclose details to a custodial monero wallet.",
                   )}
                 >
                   <Grid item>
@@ -407,7 +407,7 @@ const RobotInfo: React.FC<Props> = ({ coordinator, onClose }: Props) => {
                 <ListItemText secondary={t('Your compensations')}>
                   <Grid container justifyContent='space-between'>
                     <Grid item xs={9}>
-                      <Typography>{`${String(robot?.earnedRewards)} Sats`}</Typography>
+                      <Typography>{`${String(robot?.earnedRewards)} XMR`}</Typography>
                     </Grid>
 
                     <Grid item xs={3}>
@@ -431,8 +431,8 @@ const RobotInfo: React.FC<Props> = ({ coordinator, onClose }: Props) => {
                       <TextField
                         error={Boolean(badInvoice)}
                         helperText={badInvoice ?? ''}
-                        label={t('Invoice for {{amountSats}} Sats', {
-                          amountSats: robot?.earnedRewards,
+                        label={t('Invoice for {{amountXMR}} XMR', {
+                          amountXMR: robot?.earnedRewards,
                         })}
                         size='small'
                         value={rewardInvoice}

@@ -33,7 +33,7 @@ import { FlagWithProps } from '../Icons';
 import AutocompletePayments from './AutocompletePayments';
 import AmountRange from './AmountRange';
 import currencyDict from '../../../static/assets/currencies.json';
-import { amountToString, computeSats, genBase62Token, pn } from '../../utils';
+import { amountToString, computeXMR, genBase62Token, pn } from '../../utils';
 import { useBondEstimate } from '../../hooks/useBondEstimate';
 
 import { SelfImprovement, Lock, DeleteSweep, Edit, Map } from '@mui/icons-material';
@@ -248,7 +248,7 @@ const MakerForm = ({
         payment_method:
           maker.paymentMethodsText === '' ? 'not specified' : maker.paymentMethodsText,
         premium: !maker.premium ? 0 : maker.premium,
-        satoshis: null,
+        piconeros: null,
         public_duration: maker.publicDuration,
         escrow_duration: maker.escrowDuration,
         bond_size: maker.bondSize,
@@ -367,32 +367,32 @@ const MakerForm = ({
     const defaultRoutingBudget = 0.001;
     let label = t('Amount');
     let helper = '';
-    let swapSats = 0;
+    let swapXMR = 0;
     if (fav.mode === 'swap') {
       if (fav.type === 1) {
-        swapSats = computeSats({
+        swapXMR = computeXMR({
           amount: Number(maker.amount),
           premium: Number(maker.premium),
           fee: -(info?.maker_fee ?? 0),
           routingBudget: defaultRoutingBudget,
         });
-        label = t('Onchain amount to send (BTC)');
-        helper = t('You receive approx {{swapSats}} LN Sats (fees might vary)', {
-          swapSats,
+        label = t('Onchain amount to send (XMR)');
+        helper = t('You receive approx {{swapXMR}} LN XMR (fees might vary)', {
+          swapXMR,
         });
       } else if (fav.type === 0) {
-        swapSats = computeSats({
+        swapXMR = computeXMR({
           amount: Number(maker.amount),
           premium: Number(maker.premium),
           fee: info?.maker_fee ?? 0,
         });
-        label = t('Onchain amount to receive (BTC)');
-        helper = t('You send approx {{swapSats}} LN Sats (fees might vary)', {
-          swapSats,
+        label = t('Onchain amount to receive (XMR)');
+        helper = t('You send approx {{swapXMR}} LN XMR (fees might vary)', {
+          swapXMR,
         });
       }
     }
-    return { label, helper, swapSats };
+    return { label, helper, swapXMR };
   }, [fav, maker.amount, maker.premium, federationUpdatedAt]);
 
   const disableSubmit = useMemo(() => {
@@ -447,7 +447,7 @@ const MakerForm = ({
 
   const getDisabledMessage = () => {
     if (currentPrice === undefined) {
-      return t('The Bitcoin price is not synchronized.');
+      return t('The Monero price is not synchronized.');
     }
     if (fav.type == null) {
       return t('Please select if you want to buy or sell.');
@@ -513,10 +513,10 @@ const MakerForm = ({
               : t('Swap of ')
             : fav.type === 1
               ? fav.mode === 'fiat'
-                ? t('Buy BTC for ')
+                ? t('Buy XMR for ')
                 : t('Swap into LN ')
               : fav.mode === 'fiat'
-                ? t('Sell BTC for ')
+                ? t('Sell XMR for ')
                 : t('Swap out of LN ')}
           {fav.mode === 'fiat'
             ? amountToString(maker.amount, makerHasAmountRange, maker.minAmount, maker.maxAmount)
@@ -526,7 +526,7 @@ const MakerForm = ({
                 maker.minAmount * 100000000,
                 maker.maxAmount * 100000000,
               )}
-          {' ' + (fav.mode === 'fiat' ? currencyCode : 'Sats')}
+          {' ' + (fav.mode === 'fiat' ? currencyCode : 'XMR')}
           {maker.premium === 0
             ? fav.mode === 'fiat'
               ? t(' at market price')
@@ -537,7 +537,7 @@ const MakerForm = ({
         </Typography>
         {bondAmount !== null && (
           <Typography variant='caption' color='text.secondary' sx={{ mt: 0.5 }}>
-            {t('Estimated Bond')}: {pn(Number(bondAmount))} Sats
+            {t('Estimated Bond')}: {pn(Number(bondAmount))} XMR
           </Typography>
         )}
       </Box>
@@ -655,7 +655,7 @@ const MakerForm = ({
               <Grid item>
                 <FormControl component='fieldset'>
                   <FormHelperText sx={{ textAlign: 'center' }}>
-                    {`${fav.mode === 'fiat' ? t('Buy or Sell Bitcoin?') : t('In or Out of Lightning?')} *`}
+                    {`${fav.mode === 'fiat' ? t('Buy or Sell Monero?') : t('In or Out of Monero?')} *`}
                   </FormHelperText>
                   <div style={{ textAlign: 'center' }}>
                     <ButtonGroup size='large'>
@@ -774,8 +774,8 @@ const MakerForm = ({
                     enterNextDelay={2000}
                     title={
                       fav.mode === 'fiat'
-                        ? t('Amount of fiat to exchange for bitcoin')
-                        : t('Amount of BTC to swap for LN Sats')
+                        ? t('Amount of fiat to exchange for monero')
+                        : t('Amount of XMR to swap for LN XMR')
                     }
                   >
                     <TextField
@@ -857,7 +857,7 @@ const MakerForm = ({
                   label={`${fav.mode === 'swap' ? t('Swap Destination(s)') : t('Fiat Payment Method(s)')} *`}
                   tooltipTitle={t(
                     fav.mode === 'swap'
-                      ? t('Enter the destination of the Lightning swap')
+                      ? t('Enter the destination of the Monero swap')
                       : 'Enter your preferred fiat payment methods. Fast methods are highly recommended.',
                   )}
                   addNewButtonText={t('Add New')}
@@ -1221,7 +1221,7 @@ const MakerForm = ({
         >
           {currentPrice ? (
             <Typography align='center' variant='caption' color='text.secondary'>
-              {`${t('Order current rate:')} ${currentPrice ? currencyFormatter.format(currentPrice) : '-'} ${currencyCode}/BTC`}
+              {`${t('Order current rate:')} ${currentPrice ? currencyFormatter.format(currentPrice) : '-'} ${currencyCode}/XMR`}
             </Typography>
           ) : (
             <Typography
@@ -1233,7 +1233,7 @@ const MakerForm = ({
             >
               {t('Order current rate:')}
               <Skeleton width='4.5em' />
-              {`${currencyCode}/BTC`}
+              {`${currencyCode}/XMR`}
             </Typography>
           )}
         </Tooltip>

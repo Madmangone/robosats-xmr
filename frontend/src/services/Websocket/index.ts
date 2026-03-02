@@ -24,7 +24,7 @@ export interface WebsocketClient {
 function getWebsocketClient(): WebsocketClient {
   if (window.navigator.userAgent.includes('AndroidRobosats')) {
     // If userAgent has "AndroidRobosats", we assume the app is running inside of the
-    // WebView of the Kotlin RoboSats Android app.
+    // WebView of the Kotlin RoboXMR Android app.
     return new WebsocketAndroidClient();
   } else {
     // Otherwise, we assume the app is running in a web browser.

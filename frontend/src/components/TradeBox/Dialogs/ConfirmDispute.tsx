@@ -28,7 +28,7 @@ export const ConfirmDisputeDialog = ({
       <DialogContent>
         <DialogContentText>
           {t(
-            'The RoboSats staff will examine the statements and evidence provided. You need to build a complete case, as the staff cannot read the chat. It is best to provide a burner contact method with your statement. The satoshis in the trade escrow will be sent to the dispute winner, while the dispute loser will lose the bond.',
+            'The RoboXMR staff will examine the statements and evidence provided. You need to build a complete case, as the staff cannot read the chat. It is best to provide a burner contact method with your statement. The piconeros in the trade escrow will be sent to the dispute winner, while the dispute loser will lose the bond.',
           )}
         </DialogContentText>
         <br />

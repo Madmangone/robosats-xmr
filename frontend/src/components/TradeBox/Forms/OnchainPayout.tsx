@@ -59,7 +59,7 @@ export const OnchainPayoutForm = ({
       <List dense={true}>
         <ListItem>
           <Typography variant='body2'>
-            {t('RoboSats coordinator will do a swap and send the Sats to your onchain address.')}
+            {t('RoboXMR coordinator will do a swap and send the XMR to your onchain address.')}
           </Typography>
         </ListItem>
 
@@ -67,7 +67,7 @@ export const OnchainPayoutForm = ({
 
         <ListItem>
           <ListItemText
-            primary={`${pn(Math.floor((order.invoice_amount * order.swap_fee_rate) / 100))} Sats (${
+            primary={`${pn(Math.floor((order.invoice_amount * order.swap_fee_rate) / 100))} XMR (${
               order.swap_fee_rate
             }%)`}
             secondary={t('Swap fee')}
@@ -80,7 +80,7 @@ export const OnchainPayoutForm = ({
           <ListItemText
             primary={`${pn(
               Math.floor(Math.max(minMiningFee, onchain.miningFee) * costPerVByte),
-            )} Sats (${Math.max(minMiningFee, onchain.miningFee)} Sats/vByte)`}
+            )} XMR (${Math.max(minMiningFee, onchain.miningFee)} XMR/vByte)`}
             secondary={t('Mining fee')}
           />
         </ListItem>
@@ -97,7 +97,7 @@ export const OnchainPayoutForm = ({
                       Math.max(minMiningFee, onchain.miningFee) * costPerVByte -
                       (order.invoice_amount * order.swap_fee_rate) / 100,
                   ),
-                ) + ' Sats'}
+                ) + ' XMR'}
               </b>
             }
             secondary={t('Final amount you will receive')}
@@ -111,7 +111,7 @@ export const OnchainPayoutForm = ({
             <TextField
               error={onchain.badAddress !== ''}
               helperText={onchain.badAddress !== '' ? t(onchain.badAddress) : ''}
-              label={t('Bitcoin Address')}
+              label={t('Monero Address')}
               required
               value={onchain.address}
               fullWidth

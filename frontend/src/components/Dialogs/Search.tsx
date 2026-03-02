@@ -72,7 +72,7 @@ const SearchDialog = ({ open = false, onClose }: Props): React.JSX.Element => {
             <AccordionDetails>
               <Grid container direction='column' alignItems='center' spacing={1} padding={1}>
                 <Grid item>
-                  <Typography>{t('Are you looking to sell your Bitcoins or buy some?')}</Typography>
+                  <Typography>{t('Are you looking to sell your Moneros or buy some?')}</Typography>
                 </Grid>
                 <Grid item>
                   <Grid container direction='column' alignItems='center' spacing={1}>
@@ -105,7 +105,7 @@ const SearchDialog = ({ open = false, onClose }: Props): React.JSX.Element => {
                 </Grid>
                 <Grid item>
                   <Typography>
-                    {t('Do you want to swap from on-chain into Lightning or vice versa?')}
+                    {t('Do you want to swap from on-chain into Monero or vice versa?')}
                   </Typography>
                 </Grid>
                 <Grid item>

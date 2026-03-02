@@ -45,7 +45,7 @@ export const ConfirmUndoFiatSentDialog = ({
       <DialogContent>
         <DialogContentText id='alert-dialog-description'>
           {t(
-            'READ. In case your payment to the seller has been blocked and it is absolutely impossible to finish the trade, you can revert your confirmation of "Fiat sent". Do so only if you and the seller have ALREADY AGREED in the chat to proceed to a collaborative cancellation. After confirming, the "Collaborative cancel" button will be visible again. Only click this button if you know what you are doing. First time users of RoboSats are highly discouraged from performing this action! Make 100% sure your payment has failed and the amount is in your account.',
+            'READ. In case your payment to the seller has been blocked and it is absolutely impossible to finish the trade, you can revert your confirmation of "Fiat sent". Do so only if you and the seller have ALREADY AGREED in the chat to proceed to a collaborative cancellation. After confirming, the "Collaborative cancel" button will be visible again. Only click this button if you know what you are doing. First time users of RoboXMR are highly discouraged from performing this action! Make 100% sure your payment has failed and the amount is in your account.',
           )}
         </DialogContentText>
       </DialogContent>

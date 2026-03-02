@@ -6,7 +6,7 @@ import { Lock, LockOpen, FileDownload, FileUpload, RestartAlt, Widgets } from '@
 import { useTranslation } from 'react-i18next';
 import type { Settings, Maker } from '../../models';
 import { type Layout } from 'react-grid-layout';
-import { RoboSatsTextIcon } from '../../components/Icons';
+import { RoboXMRTextIcon } from '../../components/Icons';
 
 interface WorkspaceExport {
   version: number;
@@ -157,7 +157,7 @@ const ToolBar = ({
               <stop offset={1} stopColor={theme.palette.secondary.main} />
             </linearGradient>
           </svg>
-          <RoboSatsTextIcon
+          <RoboXMRTextIcon
             sx={{
               height: '2em',
               width: 'auto',

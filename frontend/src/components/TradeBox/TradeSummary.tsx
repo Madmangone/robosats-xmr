@@ -27,9 +27,9 @@ import {
   Link,
 } from '@mui/icons-material';
 import {
-  RoboSatsNoTextIcon,
+  RoboXMRNoTextIcon,
   SendReceiveIcon,
-  BitcoinIcon,
+  MoneroIcon,
   ExportIcon,
   FlagWithProps,
 } from '../Icons';
@@ -133,7 +133,7 @@ const TradeSummary = ({
               setButtonValue(1);
             }}
           >
-            <RoboSatsNoTextIcon />
+            <RoboXMRNoTextIcon />
           </ToggleButton>
           <ToggleButton
             value={2}
@@ -212,19 +212,19 @@ const TradeSummary = ({
 
           <ListItem>
             <ListItemIcon>
-              <BitcoinIcon />
+              <MoneroIcon />
             </ListItemIcon>
             <ListItemText
               primary={
                 pn(userSummary.is_buyer ? userSummary.received_sats : userSummary.sent_sats) +
-                ' Sats'
+                ' XMR'
               }
-              secondary={userSummary.is_buyer ? 'BTC received' : 'BTC sent'}
+              secondary={userSummary.is_buyer ? 'XMR received' : 'XMR sent'}
             />
 
             <ListItemText
-              primary={t('{{tradeFeeSats}} Sats ({{tradeFeePercent}}%)', {
-                tradeFeeSats: pn(userSummary.trade_fee_sats),
+              primary={t('{{tradeFeeXMR}} XMR ({{tradeFeePercent}}%)', {
+                tradeFeeXMR: pn(userSummary.trade_fee_sats),
                 tradeFeePercent: parseFloat((userSummary.trade_fee_percent * 100).toPrecision(3)),
               })}
               secondary={'Trade fee'}
@@ -237,15 +237,15 @@ const TradeSummary = ({
                 <Link />
               </ListItemIcon>
               <ListItemText
-                primary={t('{{swapFeeSats}} Sats ({{swapFeePercent}}%)', {
-                  swapFeeSats: pn(userSummary.swap_fee_sats),
+                primary={t('{{swapFeeXMR}} XMR ({{swapFeePercent}}%)', {
+                  swapFeeXMR: pn(userSummary.swap_fee_sats),
                   swapFeePercent: userSummary.swap_fee_percent,
                 })}
                 secondary={t('Onchain swap fee')}
               />
               <ListItemText
-                primary={t('{{miningFeeSats}} Sats', {
-                  miningFeeSats: pn(userSummary.mining_fee_sats),
+                primary={t('{{miningFeeXMR}} XMR', {
+                  miningFeeXMR: pn(userSummary.mining_fee_sats),
                 })}
                 secondary={t('Mining fee')}
               />
@@ -257,8 +257,8 @@ const TradeSummary = ({
               <LockOpen color='success' />
             </ListItemIcon>
             <ListItemText
-              primary={t('{{bondSats}} Sats ({{bondPercent}}%)', {
-                bondSats: pn(userSummary.bond_size_sats),
+              primary={t('{{bondXMR}} XMR ({{bondPercent}}%)', {
+                bondXMR: pn(userSummary.bond_size_sats),
                 bondPercent: userSummary.bond_size_percent,
               })}
               secondary={buttonValue === 0 ? t('Maker bond') : t('Taker bond')}
@@ -278,8 +278,8 @@ const TradeSummary = ({
               <AccountBalance />
             </ListItemIcon>
             <ListItemText
-              primary={t('{{revenueSats}} Sats', {
-                revenueSats: pn(platformSummary.trade_revenue_sats),
+              primary={t('{{revenueXMR}} XMR', {
+                revenueXMR: pn(platformSummary.trade_revenue_sats),
               })}
               secondary={t('Coordinator trade revenue')}
             />
@@ -290,8 +290,8 @@ const TradeSummary = ({
               <Route />
             </ListItemIcon>
             <ListItemText
-              primary={t('{{routingFeeSats}} Sats', {
-                routingFeeSats: pn(platformSummary.routing_budget_sats),
+              primary={t('{{routingFeeXMR}} XMR', {
+                routingFeeXMR: pn(platformSummary.routing_budget_sats),
               })}
               secondary={t('Routing budget')}
             />
@@ -304,7 +304,7 @@ const TradeSummary = ({
             <ListItemText
               primary={`${pn(
                 platformSummary.contract_exchange_rate.toPrecision(7),
-              )} ${currencyCode}/BTC`}
+              )} ${currencyCode}/XMR`}
               secondary={t('Contract exchange rate')}
             />
           </ListItem>

@@ -52,7 +52,7 @@ export const ConfirmFiatReceivedDialog = ({
           </Typography>
 
           <Typography variant='body2' sx={{ mt: 2 }}>
-            {t('The satoshis in the escrow will be released to the buyer:')}
+            {t('The piconeros in the escrow will be released to the buyer:')}
           </Typography>
           <Box component='ul' sx={{ mt: 1, pl: 2 }}>
             <Typography component='li' variant='body2'>

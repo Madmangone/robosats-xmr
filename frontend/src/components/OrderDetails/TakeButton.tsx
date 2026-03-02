@@ -9,7 +9,7 @@ import currencies from '../../../static/assets/currencies.json';
 import { type Order, type Info } from '../../models';
 import { ConfirmationDialog, OrderDescriptionDialog } from '../Dialogs';
 import { LoadingButton } from '@mui/lab';
-import { computeSats } from '../../utils';
+import { computeXMR } from '../../utils';
 import { GarageContext, type UseGarageStoreType } from '../../contexts/GarageContext';
 import { type UseFederationStoreType, FederationContext } from '../../contexts/FederationContext';
 import { useNavigate } from 'react-router-dom';
@@ -49,33 +49,33 @@ const TakeButton = ({
   const [badRequest, setBadRequest] = useState<string>('');
   const [loadingTake, setLoadingTake] = useState<boolean>(false);
   const [open, setOpen] = useState<OpenDialogsProps>(closeAll);
-  const [satoshis, setSatoshis] = useState<string>('');
+  const [piconeros, setPiconeros] = useState<string>('');
 
-  const satoshisNow = (): string | undefined => {
+  const piconerosNow = (): string | undefined => {
     if (currentOrder === null) return;
 
     const tradeFee = info?.taker_fee ?? 0;
     const defaultRoutingBudget = 0.001;
-    const btcNow = currentOrder.satoshis_now / 100000000;
+    const btcNow = currentOrder.piconeros_now / 100000000;
     const rate =
       currentOrder.amount != null ? currentOrder.amount / btcNow : currentOrder.max_amount / btcNow;
     const amount =
       currentOrder.currency === 1000 ? Number(takeAmount) / 100000000 : Number(takeAmount);
-    const satoshis = computeSats({
+    const piconeros = computeXMR({
       amount,
       routingBudget: currentOrder.is_buyer ? defaultRoutingBudget : 0,
       fee: tradeFee,
       rate,
     });
-    return satoshis;
+    return piconeros;
   };
 
   useEffect(() => {
-    setSatoshis(satoshisNow() ?? '');
+    setPiconeros(piconerosNow() ?? '');
   }, [slotUpdatedAt, takeAmount, info]);
 
   const currencyCode: string =
-    currentOrder?.currency === 1000 ? 'Sats' : currencies[`${Number(currentOrder?.currency)}`];
+    currentOrder?.currency === 1000 ? 'XMR' : currencies[`${Number(currentOrder?.currency)}`];
 
   interface countdownTakeOrderRendererProps {
     seconds: number;
@@ -177,7 +177,7 @@ const TakeButton = ({
                   enterTouchDelay={500}
                   enterDelay={700}
                   enterNextDelay={2000}
-                  title={t('Enter amount of fiat to exchange for bitcoin')}
+                  title={t('Enter amount of fiat to exchange for monero')}
                 >
                   <TextField
                     error={takeAmount === '' ? false : invalidTakeAmount}
@@ -239,12 +239,12 @@ const TakeButton = ({
                 </div>
               </Grid>
             </Grid>
-            {satoshis !== '0' && satoshis !== '' && !invalidTakeAmount ? (
+            {piconeros !== '0' && piconeros !== '' && !invalidTakeAmount ? (
               <Grid item>
                 <FormHelperText sx={{ position: 'relative', top: '0.15em' }}>
                   {currentOrder?.type === 1
-                    ? t('You will receive {{satoshis}} Sats (Approx)', { satoshis })
-                    : t('You will send {{satoshis}} Sats (Approx)', { satoshis })}
+                    ? t('You will receive {{piconeros}} XMR (Approx)', { piconeros })
+                    : t('You will send {{piconeros}} XMR (Approx)', { piconeros })}
                 </FormHelperText>
               </Grid>
             ) : null}

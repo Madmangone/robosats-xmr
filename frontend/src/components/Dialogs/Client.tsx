@@ -16,7 +16,7 @@ import BoltIcon from '@mui/icons-material/Bolt';
 import PublicIcon from '@mui/icons-material/Public';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 
-import { RoboSatsNoTextIcon } from '../Icons';
+import { RoboXMRNoTextIcon } from '../Icons';
 import { AppContext, type AppContextProps } from '../../contexts/AppContext';
 
 interface Props {
@@ -40,11 +40,11 @@ const ClientDialog = ({ open = false, onClose }: Props): React.JSX.Element => {
 
           <ListItem>
             <ListItemIcon>
-              <RoboSatsNoTextIcon
+              <RoboXMRNoTextIcon
                 sx={{ width: '1.4em', height: '1.4em', right: '0.2em', position: 'relative' }}
               />
             </ListItemIcon>
-            <ListItemText primary={clientVersion.long} secondary={t('RoboSats client version')} />
+            <ListItemText primary={clientVersion.long} secondary={t('RoboXMR client version')} />
           </ListItem>
 
           <Divider />

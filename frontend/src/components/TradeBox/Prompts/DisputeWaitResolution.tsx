@@ -18,7 +18,7 @@ export const DisputeWaitResolutionPrompt = (): React.JSX.Element => {
       <ListItem>
         <Typography variant='body2'>
           {t(
-            'Please, save the information needed to identify your order and your payments: order ID; payment hashes of the bonds or escrow (check on your lightning wallet); exact amount of satoshis; and robot nickname. You will have to identify yourself as the user involved in this trade via email (or other contact methods).',
+            'Please, save the information needed to identify your order and your payments: order ID; payment hashes of the bonds or escrow (check on your monero wallet); exact amount of piconeros; and robot nickname. You will have to identify yourself as the user involved in this trade via email (or other contact methods).',
           )}
         </Typography>
       </ListItem>

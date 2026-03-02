@@ -57,8 +57,8 @@ import { type Contact } from '../../models';
 import RobotAvatar from '../RobotAvatar';
 import {
   AmbossIcon,
-  BitcoinSignIcon,
-  RoboSatsNoTextIcon,
+  MoneroSignIcon,
+  RoboXMRNoTextIcon,
   BadgeFounder,
   BadgeDevFund,
   BadgePrivacy,
@@ -287,7 +287,7 @@ const BadgesHall = ({ badges, size_limit }: BadgesProps): React.JSX.Element => {
         {...tooltipProps}
         title={
           <Typography align='center' variant='body2'>
-            {t('Development fund supporter: donates {{percent}}% to make RoboSats better.', {
+            {t('Development fund supporter: donates {{percent}}% to make RoboXMR better.', {
               percent: badges?.donatesToDevFund,
             })}
           </Typography>
@@ -561,7 +561,7 @@ const CoordinatorDialog = ({ open = false, onClose, shortAlias }: Props): React.
                     <ListItemText
                       primary={`${pn(
                         Math.min(coordinator?.size_limit, coordinator?.info?.max_order_size),
-                      )} Sats`}
+                      )} XMR`}
                       secondary={t('Maximum order size')}
                     />
                   </ListItem>
@@ -624,7 +624,7 @@ const CoordinatorDialog = ({ open = false, onClose, shortAlias }: Props): React.
                               coordinator?.info?.max_order_size,
                               coordinator?.info?.max_swap,
                             ),
-                          )} Sats`}
+                          )} XMR`}
                           secondary={t('Maximum onchain swap size')}
                         />
                       </ListItem>
@@ -678,7 +678,7 @@ const CoordinatorDialog = ({ open = false, onClose, shortAlias }: Props): React.
                     </ListItemIcon>
 
                     <ListItemText
-                      primary={`${pn(coordinator?.info?.book_liquidity)} Sats`}
+                      primary={`${pn(coordinator?.info?.book_liquidity)} XMR`}
                       secondary={t('Book liquidity')}
                     />
                   </ListItem>
@@ -705,7 +705,7 @@ const CoordinatorDialog = ({ open = false, onClose, shortAlias }: Props): React.
 
                     <ListItemText
                       primary={`${coordinator?.info?.last_day_nonkyc_btc_premium}%`}
-                      secondary={t('24h non-KYC bitcoin premium')}
+                      secondary={t('24h non-KYC monero premium')}
                     />
                   </ListItem>
 
@@ -738,7 +738,7 @@ const CoordinatorDialog = ({ open = false, onClose, shortAlias }: Props): React.
                 <List dense>
                   <ListItem {...listItemProps}>
                     <ListItemIcon>
-                      <RoboSatsNoTextIcon
+                      <RoboXMRNoTextIcon
                         sx={{
                           width: '1.4em',
                           height: '1.4em',
@@ -751,7 +751,7 @@ const CoordinatorDialog = ({ open = false, onClose, shortAlias }: Props): React.
                       primary={`${t('Coordinator')} ${coordinatorVersion} - ${t('Client')} ${String(
                         clientVersion.short,
                       )}`}
-                      secondary={t('RoboSats version')}
+                      secondary={t('RoboXMR version')}
                     />
                   </ListItem>
 
@@ -848,7 +848,7 @@ const CoordinatorDialog = ({ open = false, onClose, shortAlias }: Props): React.
                         }}
                       >
                         {pn(parseFloat(coordinator?.info?.last_day_volume).toFixed(8))}
-                        <BitcoinSignIcon
+                        <MoneroSignIcon
                           sx={{ width: '0.6em', height: '0.6em' }}
                           color={'text.secondary'}
                         />
@@ -872,7 +872,7 @@ const CoordinatorDialog = ({ open = false, onClose, shortAlias }: Props): React.
                         }}
                       >
                         {pn(parseFloat(coordinator?.info?.lifetime_volume).toFixed(8))}
-                        <BitcoinSignIcon
+                        <MoneroSignIcon
                           sx={{ width: '0.6em', height: '0.6em' }}
                           color={'text.secondary'}
                         />

@@ -293,7 +293,7 @@ const BookTable = ({
             }}
           >
             {amountToString(amount, params.row.has_range, minAmount, maxAmount) +
-              (fav.mode === 'swap' ? 'M Sats' : '')}
+              (fav.mode === 'swap' ? 'M XMR' : '')}
           </div>
         );
       },
@@ -407,7 +407,7 @@ const BookTable = ({
             }}
           >
             {limitPrice ? (
-              `${pn(Math.round(price))} ${currencyCode}/BTC`
+              `${pn(Math.round(price))} ${currencyCode}/XMR`
             ) : (
               <Skeleton variant='rectangular' width={200} height={20} style={{ marginTop: 15 }} />
             )}
@@ -464,7 +464,7 @@ const BookTable = ({
 
         const tooltipTitle = (
           <span>
-            {calculatedPrice ? `${pn(calculatedPrice)} ${currencyCode}/BTC` : ''}
+            {calculatedPrice ? `${pn(calculatedPrice)} ${currencyCode}/XMR` : ''}
             {!isLargeScreen && isLowBond && (
               <>
                 {calculatedPrice && <br />}
@@ -627,10 +627,10 @@ const BookTable = ({
     };
   }, []);
 
-  const satoshisObj = useCallback(() => {
+  const piconerosObj = useCallback(() => {
     return {
-      field: 'satoshis_now',
-      headerName: t('Sats now'),
+      field: 'piconeros_now',
+      headerName: t('XMR now'),
       type: 'number',
       flex: 1,
       renderCell: (params: { row: PublicOrder }) => {
@@ -641,7 +641,7 @@ const BookTable = ({
             : parseFloat(params.row.amount);
         const premium = parseFloat(params.row.premium);
         const price = (limits[params.row.currency.toString()]?.price ?? 1) * (1 + premium / 100);
-        const satoshisNow = (100000000 * amount) / price;
+        const piconerosNow = (100000000 * amount) / price;
 
         return (
           <div
@@ -650,9 +650,9 @@ const BookTable = ({
               onOrderClicked(params.row.id, params.row.coordinatorShortAlias);
             }}
           >
-            {satoshisNow > 1000000
-              ? `${pn(Math.round(satoshisNow / 10000) / 100)} M`
-              : `${pn(Math.round(satoshisNow / 1000))} K`}
+            {piconerosNow > 1000000
+              ? `${pn(Math.round(piconerosNow / 10000) / 100)} M`
+              : `${pn(Math.round(piconerosNow / 1000))} K`}
           </div>
         );
       },
@@ -786,12 +786,12 @@ const BookTable = ({
           object: timerObj,
         },
       },
-      satoshis_now: {
+      piconeros_now: {
         priority: 9,
         order: 10,
         normal: {
           width: 6,
-          object: satoshisObj,
+          object: piconerosObj,
         },
       },
       type: {
@@ -904,11 +904,11 @@ const BookTable = ({
         <Grid item>
           <Typography align='center' component='h5' variant='h5'>
             {fav.type === 0
-              ? t('No orders found to sell BTC for {{currencyCode}}', {
+              ? t('No orders found to sell XMR for {{currencyCode}}', {
                   currencyCode:
                     fav.currency === 0 ? t('ANY') : currencyDict[fav.currency.toString()],
                 })
-              : t('No orders found to buy BTC for {{currencyCode}}', {
+              : t('No orders found to buy XMR for {{currencyCode}}', {
                   currencyCode:
                     fav.currency === 0 ? t('ANY') : currencyDict[fav.currency.toString()],
                 })}

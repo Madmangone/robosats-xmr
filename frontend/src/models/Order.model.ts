@@ -69,7 +69,7 @@ class Order {
   payment_method: string = '';
   is_explicit: boolean = false;
   premium: number = 0;
-  satoshis: number = 0;
+  piconeros: number = 0;
   maker: number = 0;
   taker: number = 0;
   escrow_duration: number = 0;
@@ -82,7 +82,7 @@ class Order {
   maker_status: 'Active' | 'Seen recently' | 'Inactive' = 'Active';
   taker_status: 'Active' | 'Seen recently' | 'Inactive' = 'Active';
   price_now: number | undefined = undefined;
-  satoshis_now: number = 0;
+  piconeros_now: number = 0;
   latitude: number = 0;
   longitude: number = 0;
   password: string | undefined = undefined;
@@ -106,11 +106,11 @@ class Order {
   maker_locked: boolean = false;
   taker_locked: boolean = false;
   escrow_locked: boolean = false;
-  trade_satoshis: number = 0;
+  trade_piconeros: number = 0;
   bond_invoice: string = '';
-  bond_satoshis: number = 0;
+  bond_piconeros: number = 0;
   escrow_invoice: string = '';
-  escrow_satoshis: number = 0;
+  escrow_piconeros: number = 0;
   invoice_amount: number = 0;
   swap_allowed: boolean = false;
   swap_failure_reason: string = '';
@@ -167,8 +167,8 @@ class Order {
 
   expiry_reason: number = 0;
   expiry_message: string = '';
-  num_satoshis: number = 0;
-  sent_satoshis: number = 0;
+  num_piconeros: number = 0;
+  sent_piconeros: number = 0;
   txid: string = '';
   tx_queued: boolean = false;
   address: string = '';
@@ -195,7 +195,7 @@ class Order {
       payment_method: this.payment_method,
       is_explicit: this.is_explicit,
       premium: this.is_explicit ? null : this.premium,
-      satoshis: this.is_explicit ? this.satoshis : null,
+      piconeros: this.is_explicit ? this.piconeros : null,
       public_duration: this.public_duration,
       escrow_duration: this.escrow_duration,
       bond_size: this.bond_size,

@@ -8,8 +8,8 @@ import { type Order, type Settings } from '../../../models';
 import { pn } from '../../../utils';
 import { Bolt, Link } from '@mui/icons-material';
 import {
-  LightningPayoutForm,
-  type LightningForm,
+  MoneroPayoutForm,
+  type MoneroForm,
   OnchainPayoutForm,
   type OnchainForm,
 } from '../Forms';
@@ -17,9 +17,9 @@ import {
 interface PayoutPrompProps {
   order: Order;
   onClickSubmitInvoice: (invoice: string) => void;
-  lightning: LightningForm;
-  loadingLightning: boolean;
-  setLightning: (state: LightningForm) => void;
+  monero: MoneroForm;
+  loadingMonero: boolean;
+  setMonero: (state: MoneroForm) => void;
   onClickSubmitAddress: () => void;
   onchain: OnchainForm;
   setOnchain: (state: OnchainForm) => void;
@@ -30,9 +30,9 @@ interface PayoutPrompProps {
 export const PayoutPrompt = ({
   order,
   onClickSubmitInvoice,
-  loadingLightning,
-  lightning,
-  setLightning,
+  loadingMonero,
+  monero,
+  setMonero,
   onClickSubmitAddress,
   loadingOnchain,
   onchain,
@@ -42,7 +42,7 @@ export const PayoutPrompt = ({
   const { t } = useTranslation();
   const currencyCode: string = currencies[`${order.currency}`];
 
-  const [tab, setTab] = useState<'lightning' | 'onchain'>('lightning');
+  const [tab, setTab] = useState<'monero' | 'onchain'>('monero');
 
   return (
     <Grid
@@ -56,7 +56,7 @@ export const PayoutPrompt = ({
       <Grid item>
         <Typography variant='body2'>
           {t(
-            'Before letting you send {{amountFiat}} {{currencyCode}}, we want to make sure you are able to receive the BTC.',
+            'Before letting you send {{amountFiat}} {{currencyCode}}, we want to make sure you are able to receive the XMR.',
             {
               amountFiat: pn(
                 parseFloat(
@@ -65,7 +65,7 @@ export const PayoutPrompt = ({
                   ).toFixed(4),
                 ),
               ),
-              currencyCode: order.currency === 1000 ? 'Sats' : currencyCode,
+              currencyCode: order.currency === 1000 ? 'XMR' : currencyCode,
             },
           )}
         </Typography>
@@ -80,7 +80,7 @@ export const PayoutPrompt = ({
             setTab(value == null ? tab : value);
           }}
         >
-          <ToggleButton value='lightning'>
+          <ToggleButton value='monero'>
             <div
               style={{
                 display: 'flex',
@@ -89,7 +89,7 @@ export const PayoutPrompt = ({
                 flexWrap: 'wrap',
               }}
             >
-              <Bolt /> {t('Lightning')}
+              <Bolt /> {t('Monero')}
             </div>
           </ToggleButton>
           <ToggleButton value='onchain' disabled={!order.swap_allowed || order.currency === 1000}>
@@ -107,13 +107,13 @@ export const PayoutPrompt = ({
         </ToggleButtonGroup>
       </Grid>
 
-      <Grid item style={{ display: tab === 'lightning' ? '' : 'none' }}>
-        <LightningPayoutForm
+      <Grid item style={{ display: tab === 'monero' ? '' : 'none' }}>
+        <MoneroPayoutForm
           order={order}
           settings={settings}
-          loading={loadingLightning}
-          lightning={lightning}
-          setLightning={setLightning}
+          loading={loadingMonero}
+          monero={monero}
+          setMonero={setMonero}
           onClickSubmit={onClickSubmitInvoice}
         />
       </Grid>

@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Box, Button, Grid, Typography, useTheme } from '@mui/material';
-import { RoboSatsTextIcon } from '../../components/Icons';
+import { RoboXMRTextIcon } from '../../components/Icons';
 import { FastForward, RocketLaunch, Key, Search } from '@mui/icons-material';
 import { genBase62Token } from '../../utils';
 import { type UseFederationStoreType, FederationContext } from '../../contexts/FederationContext';
@@ -40,7 +40,7 @@ const Welcome = ({ setView, width, setInputToken }: WelcomeProps): React.JSX.Ele
             <stop offset={1} stopColor={theme.palette.secondary.main} />
           </linearGradient>
         </svg>
-        <RoboSatsTextIcon
+        <RoboXMRTextIcon
           sx={{
             fill: 'url(#linearColors)',
             height: `${Math.min(width * 0.66, 17) * 0.25}em`,
@@ -74,7 +74,7 @@ const Welcome = ({ setView, width, setInputToken }: WelcomeProps): React.JSX.Ele
           <Grid container direction='column' alignItems='center' spacing={1} padding={1.5}>
             <Grid item>
               <Typography align='center'>
-                {t('Create a new robot and learn to use RoboSats')}
+                {t('Create a new robot and learn to use RoboXMR')}
               </Typography>
             </Grid>
             <Grid item>
