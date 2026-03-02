@@ -1,0 +1,105 @@
+version: '3.9'
+services:
+  postgres:
+    image: postgres:14
+    container_name: postgres-xmr
+    restart: always
+    environment:
+      POSTGRES_DB: robosats
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: example
+    volumes:
+      - postgresdata:/var/lib/postgresql/data
+
+  redis:
+    image: redis:6.2.6
+    container_name: redis-xmr
+    restart: always
+    volumes:
+      - redisdata:/data
+
+  monero-wallet-rpc:
+    image: sethsimmons/simple-monero-wallet-rpc:latest
+    container_name: monero-wallet-rpc
+    restart: always
+    ports:
+      - "18083:18083"
+    volumes:
+      - xmrwalletdata:/wallet
+    command: >
+      --stagenet
+      --daemon-address stagenet.community.rino.io:38081
+      --rpc-bind-port 18083
+      --rpc-bind-ip 0.0.0.0
+      --confirm-external-bind
+      --disable-rpc-login
+      --wallet-file /wallet/robosats
+      --password ""
+
+  backend:
+    build:
+      context: .
+      args:
+        DEVELOPMENT: True
+    image: backend-xmr
+    container_name: django-xmr
+    restart: always
+    depends_on:
+      - postgres
+      - redis
+      - monero-wallet-rpc
+    environment:
+      DEVELOPMENT: True
+      LNVENDOR: XMR
+      XMR_WALLET_HOST: monero-wallet-rpc
+      XMR_WALLET_PORT: 18083
+      POSTGRES_HOST: postgres
+      REDIS_URL: redis://redis:6379/1
+      USE_TOR: False
+    volumes:
+      - .:/usr/src/robosats
+    ports:
+      - "8000:8000"
+    command: python3 -u manage.py runserver 0.0.0.0:8000
+
+  clean-orders:
+    image: backend-xmr
+    pull_policy: never
+    restart: always
+    container_name: clean-orders-xmr
+    environment:
+      SKIP_COLLECT_STATIC: "true"
+      LNVENDOR: XMR
+      XMR_WALLET_HOST: monero-wallet-rpc
+      POSTGRES_HOST: postgres
+      REDIS_URL: redis://redis:6379/1
+    command: python3 manage.py clean_orders
+    volumes:
+      - .:/usr/src/robosats
+    depends_on:
+      - postgres
+      - redis
+
+  follow-invoices:
+    image: backend-xmr
+    pull_policy: never
+    container_name: follow-invoices-xmr
+    restart: always
+    environment:
+      SKIP_COLLECT_STATIC: "true"
+      LNVENDOR: XMR
+      XMR_WALLET_HOST: monero-wallet-rpc
+      POSTGRES_HOST: postgres
+      REDIS_URL: redis://redis:6379/1
+    command: python3 manage.py follow_invoices
+    volumes:
+      - .:/usr/src/robosats
+    depends_on:
+      - postgres
+      - redis
+      - monero-wallet-rpc
+
+volumes:
+  postgresdata:
+  redisdata:
+  xmrwalletdata:
