@@ -59,6 +59,7 @@ from api.serializers import (
     UpdateRobotSerializer,
 )
 from api.utils import (
+    get_xmr_version,
     compute_avg_premium,
     get_cln_version,
     get_lnd_version,
@@ -856,6 +857,7 @@ class InfoView(viewsets.ViewSet):
         context["last_day_volume"] = round(total_volume, 8)
         context["lifetime_volume"] = round(lifetime_volume, 8)
         context["lnd_version"] = get_lnd_version()
+        context["xmr_version"] = get_xmr_version()
         context["cln_version"] = get_cln_version()
         context["robosats_running_commit_hash"] = get_robosats_commit()
         context["version"] = settings.VERSION
