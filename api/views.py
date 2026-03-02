@@ -17,6 +17,8 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from api.errors import new_error
+import numpy as np
+from api.utils import get_exchange_rates
 from api.logics import Logics
 from api.tasks import cache_market
 from api.models import (
@@ -925,30 +927,18 @@ class RewardView(CreateAPIView):
         return Response({"successful_withdrawal": True}, status.HTTP_200_OK)
 
 
-class PriceView(ListAPIView):
-    serializer_class = PriceSerializer
-
-    @extend_schema(**PriceViewSchema.get)
+class PriceView(APIView):
+    """
+    Returns current XMR price in multiple currencies using live API.
+    """
     def get(self, request):
-        payload = {}
-        queryset = Currency.objects.all().order_by("currency")
-
-        for currency in queryset:
-            code = Currency.currency_dict[str(currency.currency)]
-            try:
-                last_tick = MarketTick.objects.filter(currency=currency).latest(
-                    "timestamp"
-                )
-                payload[code] = {
-                    "price": last_tick.price,
-                    "volume": last_tick.volume,
-                    "premium": last_tick.premium,
-                    "timestamp": last_tick.timestamp,
-                }
-            except Exception:
-                payload[code] = None
-
-        return Response(payload, status.HTTP_200_OK)
+        currencies = request.query_params.get('currencies', 'USD,EUR,GBP,JPY').split(',')
+        rates = get_exchange_rates(currencies)
+        result = {}
+        for i, currency in enumerate(currencies):
+            if i < len(rates) and rates[i] is not None and not np.isnan(rates[i]):
+                result[currency] = float(rates[i])
+        return Response(result)
 
 
 class TickView(ListAPIView):
