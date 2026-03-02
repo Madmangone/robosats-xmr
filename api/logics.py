@@ -1439,6 +1439,7 @@ class Logics:
             created_at=hold_payment["created_at"],
             expires_at=hold_payment["expires_at"],
             cltv_expiry=hold_payment["cltv_expiry"],
+            subaddress_index=hold_payment.get("subaddress_index"),
         )
 
         take_order.expires_at = timezone.now() + timedelta(
@@ -1535,6 +1536,7 @@ class Logics:
             created_at=hold_payment["created_at"],
             expires_at=hold_payment["expires_at"],
             cltv_expiry=hold_payment["cltv_expiry"],
+            subaddress_index=hold_payment.get("subaddress_index"),
         )
 
         order.save(update_fields=["trade_escrow"])

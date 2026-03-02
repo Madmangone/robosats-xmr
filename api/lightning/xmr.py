@@ -314,12 +314,10 @@ class XMRNode:
                 f"{order_id}_{subaddress_index}_{secrets.token_hex(16)}".encode()
             ).hexdigest()
 
-            # Store mapping of payment_hash -> subaddress_index
-            cls._store_subaddress_mapping(payment_hash, subaddress_index)
-
             now = timezone.now()
             hold_payment["invoice"] = subaddress  # XMR address IS the invoice
             hold_payment["preimage"] = f"{subaddress_index}:"  # buyer address added later
+            hold_payment["subaddress_index"] = subaddress_index  # stored in DB after LNPayment created
             hold_payment["payment_hash"] = payment_hash
             hold_payment["created_at"] = now
             hold_payment["expires_at"] = now + timedelta(seconds=invoice_expiry)
@@ -652,26 +650,21 @@ class XMRNode:
 
     @classmethod
     def _store_subaddress_mapping(cls, payment_hash, subaddress_index):
-        """Store payment_hash -> subaddress_index mapping in a simple file"""
-        import json
-        import os
-        mapping_file = "/tmp/xmr_subaddress_map.json"
-        mapping = {}
-        if os.path.exists(mapping_file):
-            with open(mapping_file, "r") as f:
-                mapping = json.load(f)
-        mapping[payment_hash] = subaddress_index
-        with open(mapping_file, "w") as f:
-            json.dump(mapping, f)
+        """Store payment_hash -> subaddress_index mapping in the database"""
+        from api.models import LNPayment
+        try:
+            lnpayment = LNPayment.objects.get(payment_hash=payment_hash)
+            lnpayment.subaddress_index = subaddress_index
+            lnpayment.save(update_fields=["subaddress_index"])
+        except LNPayment.DoesNotExist:
+            pass
 
     @classmethod
     def _get_subaddress_index(cls, payment_hash):
-        """Retrieve subaddress_index from payment_hash"""
-        import json
-        import os
-        mapping_file = "/tmp/xmr_subaddress_map.json"
-        if not os.path.exists(mapping_file):
+        """Retrieve subaddress_index from database"""
+        from api.models import LNPayment
+        try:
+            lnpayment = LNPayment.objects.get(payment_hash=payment_hash)
+            return lnpayment.subaddress_index
+        except LNPayment.DoesNotExist:
             return None
-        with open(mapping_file, "r") as f:
-            mapping = json.load(f)
-        return mapping.get(payment_hash, None)

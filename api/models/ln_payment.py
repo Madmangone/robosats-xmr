@@ -134,6 +134,9 @@ class LNPayment(models.Model):
         verbose_name = "Lightning payment"
         verbose_name_plural = "Lightning payments"
 
+    # XMR: subaddress index for Monero escrow (replaces Lightning hold invoice)
+    subaddress_index = models.PositiveIntegerField(null=True, default=None, blank=True)
+
     @property
     def hash(self):
         # Payment hash is the primary key of LNpayments
