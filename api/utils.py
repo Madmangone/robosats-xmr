@@ -202,6 +202,17 @@ def get_exchange_rates(currencies):
                         yadio_rates.append(np.nan)
                 api_rates.append(yadio_rates)
 
+            elif "cryptocompare.com" in api_url:
+                tsyms = ",".join(currencies)
+                full_url = f"https://min-api.cryptocompare.com/data/price?fsym=XMR&tsyms={tsyms}"
+                crypto_prices = session.get(full_url).json()
+                crypto_rates = []
+                for currency in currencies:
+                    try:
+                        crypto_rates.append(float(crypto_prices[currency]))
+                    except Exception:
+                        crypto_rates.append(np.nan)
+                api_rates.append(crypto_rates)
             # Tor proxied requests to bitpay.com will fail. Skip if USE_TOR is enabled.
             elif "bitpay.com" in api_url and not USE_TOR:
                 headers = {
