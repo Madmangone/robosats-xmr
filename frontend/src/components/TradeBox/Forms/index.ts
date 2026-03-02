@@ -1,5 +1,4 @@
-export { MoneroPayoutForm, defaultMonero } from './MoneroPayout';
-export { OnchainPayoutForm, defaultOnchain } from './OnchainPayout';
+import MoneroPayoutForm from './MoneroPayout';
 
-export type { MoneroForm } from './MoneroPayout';
-export type { OnchainForm } from './OnchainPayout';
+export { MoneroPayoutForm };
+export default MoneroPayoutForm;
