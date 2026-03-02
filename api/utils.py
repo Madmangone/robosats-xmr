@@ -283,12 +283,24 @@ def get_cln_version():
     if LNVENDOR == "CLN":
         try:
             from api.lightning.cln import CLNNode
-
             return CLNNode.get_version()
         except Exception:
             return "Not installed"
     else:
         return "Not installed"
+
+xmr_version_cache = {}
+@ring.dict(xmr_version_cache, expire=3600)
+def get_xmr_version():
+    if LNVENDOR == "XMR":
+        try:
+            from api.lightning.xmr import XMRNode
+            return XMRNode.get_version()
+        except Exception:
+            return "Not installed"
+    else:
+        return "Not installed"
+
 
 
 robosats_commit_cache = {}
